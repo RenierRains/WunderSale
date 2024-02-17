@@ -82,4 +82,9 @@ class MessageController extends Controller
 
         return response()->json($messages);
     }
+
+    public function compose(User $user)
+    {
+        return view('messages.compose', compact('user'));
+    }
 }

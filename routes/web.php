@@ -49,4 +49,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/messages/{userId}', [MessageController::class, 'show'])->name('messages.show');
 Route::get('/messages/fetch/{userId}', [MessageController::class, 'fetchMessages'])->name('messages.fetch');
 
+Route::get('/messages/compose/{user}', [MessageController::class, 'compose'])->name('messages.compose')->middleware('auth');
+
 require __DIR__.'/auth.php';
