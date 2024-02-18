@@ -16,9 +16,17 @@ class AdminController extends Controller
         return view('admin.users', compact('users'));
     }
 
-public function items()
+    public function items()
     {
         $items = Item::all();
         return view('admin.items', compact('items'));
     }
+
+    public function destroyUser(User $user)
+    {
+        // maybe add checks for admin abuse (real funny)
+        $user->delete();
+        return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
+    }
+        
 }

@@ -66,5 +66,6 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->name('profile.show');
 
+Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy')->middleware('admin');
 
 require __DIR__.'/auth.php';
