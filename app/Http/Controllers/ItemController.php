@@ -22,6 +22,7 @@ class ItemController extends Controller
     {
         $categories = Category::all();
         $items = Item::inRandomOrder()->take(8)->get();
+        
     
         return view('items.index', compact('categories', 'items'));
     }
@@ -39,11 +40,11 @@ class ItemController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|max:2048', // Validates the image file
+            'image' => 'nullable|image|max:2048', //image file
         ]);
 
         $data = $request->only(['name', 'description', 'price', 'category_id']);
-        $data['user_id'] = Auth::id(); // Assuming you want to associate the item with the logged-in user
+        $data['user_id'] = Auth::id(); // user to item association 
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('items', 'public');
@@ -56,7 +57,8 @@ class ItemController extends Controller
 
     public function show(Item $item)
     {
-        return view('items.show', compact('item'));
+        $randomItems = Item::where('id', '!=', $item->id)->inRandomOrder()->take(4)->get(); 
+        return view('items.show', compact('item', 'randomItems'));
     }
 
     public function edit(Item $item)

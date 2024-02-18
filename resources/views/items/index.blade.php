@@ -17,7 +17,7 @@
         @endforeach
     </div>
 
-    <h2 class="text-xl text-black font-bold my-4">Random Items</h2>
+    <h2 class="text-xl text-black font-bold my-4">EXPLORE</h2>
     <div class="flex flex-wrap -mx-2">
         @foreach ($items as $item)
             <div class="p-2 w-full sm:w-1/2 md:w-1/4">

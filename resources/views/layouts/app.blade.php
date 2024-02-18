@@ -20,6 +20,18 @@
         display: flex;
         flex-direction: column-reverse; /* Newest messages at the bottom test */
         overflow-y: auto;}
+
+        /* For Webkit browsers like Chrome, Safari */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        /* For Mozilla Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
@@ -35,7 +47,7 @@
             </form>
             @auth
             <div class="flex items-center space-x-2">
-                <a href="{{ route('items.index') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-green-600">
+                <a href="{{ route('cart.index') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-green-600">
                     <i class="fa fa-shopping-cart"></i>
                 </a>
                 <a href="{{ route('items.create') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-yellow-600">
@@ -108,7 +120,7 @@
 
     <footer class="bg-blue-500 text-white text-center p-4 shadow-md">
         <div class="container mx-auto">
-            &copy; {{ date('Y') }} {{ config('app.name', 'WunderSale') }}. All rights reserved.
+            &copy; {{ date('Y') }} {{ config('app.name', 'WunderSale') }}.
         </div>
     </footer>
 </body>
