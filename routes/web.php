@@ -68,4 +68,10 @@ Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->n
 
 Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy')->middleware('admin');
 
+Route::get('/chat/messages/{userId}', 'ChatController@fetchMessages');
+Route::post('/chat/send', 'ChatController@sendMessage');
+Route::get('/chat', function () {
+    return view('chat');
+})->middleware('auth');
+
 require __DIR__.'/auth.php';
