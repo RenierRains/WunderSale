@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Category;
 
+use Illuminate\Support\Facades\Gate;
+
 
 class ItemController extends Controller
 {
@@ -63,12 +65,20 @@ class ItemController extends Controller
 
     public function edit(Item $item)
     {
-        $categories = Category::all();
+        if (! Gate::allows('update-item', $item)) {
+            abort(403);
+        }
+
+        $categories = Category::all(); //
         return view('items.edit', compact('item', 'categories'));
     }
 
     public function update(Request $request, Item $item)
     {
+        if (! Gate::allows('update-item', $item)) {
+            abort(403);
+        }
+    
         $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
@@ -88,8 +98,9 @@ class ItemController extends Controller
         }
 
         $item->update($data);
+        \Log::info('Update method called', $request->all());
 
-        return redirect()->route('items.index')->with('success', 'Item updated successfully.');
+        return redirect()->route('items.show', $item->id)->with('success', 'Item updated successfully.');
     }
 
     public function destroy(Item $item)
@@ -101,4 +112,13 @@ class ItemController extends Controller
 
         return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
     }
+
+    public function userItems()
+    {
+        $items = Auth::user()->items;
+
+        return view('items.user_items', compact('items'));
+    }
+
+    
 }

@@ -23,6 +23,9 @@ Route::get('/', [ItemController::class, 'index'])->name('home');
 
 Route::resource('items', ItemController::class);
 Route::get('/items/{id}', [ItemController::class, 'show'])->name('items.show');
+Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit')->middleware('auth');
+Route::put('/items/{item}', [ItemController::class, 'update'])->name('items.update')->middleware('auth');
+
 
 
 Route::resource('categories', CategoryController::class);
@@ -43,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/create', [MessageController::class, 'create'])->name('messages.create');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+
+    Route::get('/my-items', [ItemController::class, 'userItems'])->name('items.user');
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
