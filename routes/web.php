@@ -18,9 +18,7 @@ use App\Http\Controllers\SearchController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ItemController::class, 'index'])->name('home');
 
 // Resource routes for items
 Route::resource('items', ItemController::class);
@@ -28,9 +26,8 @@ Route::resource('items', ItemController::class);
 // Resource routes for categories
 Route::resource('categories', CategoryController::class);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ItemController::class, 'index'])
+->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

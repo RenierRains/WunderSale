@@ -13,7 +13,7 @@
     window.userId = {{ auth()->id() }};
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+    <script src="//unpkg.com/alpinejs" defer></script>
     <style> 
         .messages {
         display: flex;
@@ -33,7 +33,35 @@
             <!-- Auth Links -->
             <div class="hidden sm:flex sm:items-center">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="text-sm text-white font-semibold hover:text-gray-200">Dashboard</a>
+                <div class="relative" x-data="{ isOpen: false }">
+                    <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
+                        {{ Auth::user()->name }} <!-- Display authenticated user's name -->
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div x-show="isOpen" @click.away="isOpen = false" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
+                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                            Manage Account
+                        </a>
+                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                            Your Orders
+                        </a>
+                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                            Liked Items
+                        </a>
+                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                            Your Reviews
+                        </a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    @csrf
+                </form>
+
                 @else
                     <a href="{{ route('login') }}" class="text-sm text-white font-semibold hover:text-gray-200">Log in</a>
                     @if (Route::has('register'))
