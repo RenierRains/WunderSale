@@ -1,6 +1,6 @@
-
-
-<img src="https://github.com/RenierRains/WunderSale/assets/47496157/e81f17c7-638e-460c-814e-ebcf4775f8f0" alt="WunderSale Logo" width="200" style="display: block; margin: 0 auto;">
+<p align="center">
+  <img src="https://github.com/RenierRains/WunderSale/assets/47496157/e81f17c7-638e-460c-814e-ebcf4775f8f0" alt="WunderSale Logo" width="200">
+</p>
 
 # WunderSale
 
@@ -15,5 +15,5 @@ WunderSale is an android application and website designed exclusively for studen
 ## Technologies Used
 
 - **Website**: Laravel, Laravel Breeze, Blade with Alpine.js, Tailwind CSS, MySQL
-- **Android Application**: (Include technologies used for the Android app)
+- **Android Application**: Kotlin, Android Studio ,----
 
