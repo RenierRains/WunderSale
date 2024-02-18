@@ -50,4 +50,7 @@ Route::post('/register', [RegisteredUserController::class, 'store'])->middleware
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
+Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->name('profile.show');
+
+
 require __DIR__.'/auth.php';

@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+use App\Models\User;
+use App\Models\Item;
+
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * read
      */
     public function edit(Request $request): View
     {
@@ -22,7 +25,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * update
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -38,7 +41,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * delete
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -56,5 +59,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function showSellerProfile(User $user)
+    {
+        $items = $user->items()->get();  
+        return view('profile.seller_profile', compact('user', 'items'));
     }
 }

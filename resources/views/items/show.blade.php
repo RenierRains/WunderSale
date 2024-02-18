@@ -30,7 +30,7 @@
                 <!-- seller -->
                 <div class="bg-gray-100 p-4 rounded-lg flex justify-between items-center">
                     <h3 class="text-lg font-semibold">
-                        Sold by: <br><a href="{{ route('items.show', $item->user->id) }}" class="font-semibold hover:underline">{{ $item->user->name }}</a>
+                        Sold by: <br><a href="{{ route('profile.show', $item->user->id) }}" class="font-semibold hover:underline">{{ $item->user->name }}</a>
                     </h3><!-- CRITICAL change to actual route thank you -->
                     
                     <!-- CRITICAL change to actual route thank you -->

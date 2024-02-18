@@ -75,7 +75,7 @@
                 @auth
                 <div class="relative" x-data="{ isOpen: false }">
                     <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
-                        {{ Auth::user()->name }} <!-- change to id later maybe? ask feedback etc?-->
+                        {{ Auth::user()->student_number }} <!-- change to id later maybe? ask feedback etc?-->
                     </button>
 
                     <!-- Dropdown Menu -->
