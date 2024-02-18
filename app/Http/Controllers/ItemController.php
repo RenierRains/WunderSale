@@ -20,8 +20,10 @@ class ItemController extends Controller
 
     public function index()
     {
-        $items = Item::latest()->with('category')->get();
-        return view('items.index', compact('items'));
+        $categories = Category::all();
+        $items = Item::inRandomOrder()->take(8)->get();
+    
+        return view('items.index', compact('categories', 'items'));
     }
 
     public function create()

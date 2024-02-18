@@ -13,10 +13,13 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('query');
-        // Simple search in the 'name' and 'description'.
-        // Adjust query maybe later.
+        // Simple search
+        // Adjust query maybe laterish?
         $items = Item::where('name', 'LIKE', '%' . $query . '%')
                      ->orWhere('description', 'LIKE', '%' . $query . '%')
+                     ->orWhereHas('category', function ($q) use ($query) {
+                        $q->where('name', 'LIKE', '%' . $query . '%');
+                    })
                      ->get();
 
         return view('search.results', compact('items'));

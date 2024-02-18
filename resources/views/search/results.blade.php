@@ -20,7 +20,7 @@
             </div>
         @endforeach
     @else
-        <p>No items found.</p>
+        <p class="text-red-500">No items found.</p>
     @endif
 </div>
 @endsection

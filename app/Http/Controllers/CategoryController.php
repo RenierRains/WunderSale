@@ -36,6 +36,12 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
+    public function items()
+{
+    return $this->hasMany(Item::class);
+}
+
+
     // Assuming categories don't change often, you might not need edit, update, or delete.
     // Implement if needed.
 }
