@@ -1,6 +1,8 @@
-# WunderSale
 
-![423422544_6925291970917018_5662256057855040496_n](https://github.com/RenierRains/WunderSale/assets/47496157/e81f17c7-638e-460c-814e-ebcf4775f8f0)
+
+<img src="https://github.com/RenierRains/WunderSale/assets/47496157/e81f17c7-638e-460c-814e-ebcf4775f8f0" alt="WunderSale Logo" width="200" style="display: block; margin: 0 auto;">
+
+# WunderSale
 
 WunderSale is an android application and website designed exclusively for students enrolled in UPANG, offering a seamless platform to sell personal items and raise funds towards their tuition expenses. With the rising costs of education, students often find themselves burdened by financial constraints. This app aims to empower them by providing services or items into monetary support for their academic pursuits.
 
