@@ -50,6 +50,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-items', [ItemController::class, 'userItems'])->name('items.user');
 });
 
+//ADMIN ROUTES
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
+    // ud operations needed
+});
+
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 
