@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,5 +51,7 @@ Route::get('/messages/{userId}', [MessageController::class, 'show'])->name('mess
 Route::get('/messages/fetch/{userId}', [MessageController::class, 'fetchMessages'])->name('messages.fetch');
 
 Route::get('/messages/compose/{user}', [MessageController::class, 'compose'])->name('messages.compose')->middleware('auth');
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 require __DIR__.'/auth.php';

@@ -8,15 +8,16 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script type="text/javascript">
     window.userId = {{ auth()->id() }};
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
     <style> 
         .messages {
         display: flex;
-        flex-direction: column-reverse; /* Newest messages at the bottom */
+        flex-direction: column-reverse; /* Newest messages at the bottom test */
         overflow-y: auto;}
     </style>
 </head>
@@ -24,10 +25,10 @@
     <header class="bg-blue-500 shadow-md sticky top-0 z-50">
         <nav class="container mx-auto flex justify-between items-center p-4 text-white">
             <a href="/" class="text-lg font-semibold">{{ config('app.name', 'WunderSale') }}</a>
-            <!-- Search bar -->
-            <form action="/search" method="GET" class="flex items-center">
-                <input type="text" name="query" placeholder="Search..." class="px-4 py-2 w-64 rounded-lg focus:outline-none" />
-                <button type="submit" class="ml-4 px-4 py-2 bg-white text-blue-500 rounded-lg hover:bg-gray-100">Search</button>
+            <!-- Search -->
+            <form action="{{ route('search') }}" method="GET" class="flex items-center">
+                <input type="text" name="query" placeholder="Search in WunderSale" class="text-black px-4 py-2 w-64 rounded-lg focus:outline-none" required>
+                <button type="submit" class="ml-4 px-4 py-2 bg-white-500 text-white rounded-lg hover:bg-blue-600">Search</button>
             </form>
             <!-- Auth Links -->
             <div class="hidden sm:flex sm:items-center">
