@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto p-6">
-    <h1 class="text-xl font-bold mb-4">Add a New Item</h1>
+    <h1 class="text-xl text-black font-bold mb-4">Add a New Item</h1>
 
     <!-- Add enctype attribute to support file upload -->
     <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">

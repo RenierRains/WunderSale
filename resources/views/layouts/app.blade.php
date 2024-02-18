@@ -7,6 +7,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script type="text/javascript">
@@ -26,10 +27,25 @@
         <nav class="container mx-auto flex justify-between items-center p-4 text-white">
             <a href="/" class="text-lg font-semibold">{{ config('app.name', 'WunderSale') }}</a>
             <!-- Search -->
-            <form action="{{ route('search') }}" method="GET" class="flex items-center">
-                <input type="text" name="query" placeholder="Search in WunderSale" class="text-black px-4 py-2 w-64 rounded-lg focus:outline-none" required>
-                <button type="submit" class="ml-4 px-4 py-2 bg-white-500 text-white rounded-lg hover:bg-blue-600">Search</button>
+            <form action="{{ route('search') }}" method="GET" class="flex items-center flex-grow mx-4">
+            <input type="text" name="query" placeholder="Search in WunderSale" class="text-black px-4 py-2 w-full rounded-lg focus:outline-none" required>
+            <button type="submit" class="ml-2 px-4 py-2 bg-white-500 text-white rounded-lg hover:bg-blue-600">
+                <i class="fa fa-search"></i>
+            </button>
             </form>
+            @auth
+            <div class="flex items-center space-x-2">
+                <a href="{{ route('items.index') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-green-600">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
+                <a href="{{ route('items.create') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-yellow-600">
+                    <i class="fa fa-plus-circle"></i>
+                </a>
+                <a href="{{ route('items.index') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-red-600">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </div>
+            @endauth
             <!-- Auth Links -->
             <div class="hidden sm:flex sm:items-center">
                 @auth
