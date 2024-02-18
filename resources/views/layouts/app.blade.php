@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- Scripts -->
     
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
     <script type="text/javascript">
     window.userId = {{ auth()->id() }};
     </script>
@@ -36,6 +36,7 @@
     </style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <header class="bg-blue-500 shadow-md sticky top-0 z-50">
         <nav class="container mx-auto flex justify-between items-center p-4 text-white">
             <a href="/" class="text-lg font-semibold">{{ config('app.name', 'WunderSale') }}</a>
@@ -121,7 +122,9 @@
 
     <main class="flex-grow">
         <div class="container mx-auto px-4 py-8">
+        <div id="app">
             @yield('content')
+        </div>
         </div>
     </main>
 
@@ -130,5 +133,8 @@
             &copy; {{ date('Y') }} {{ config('app.name', 'WunderSale') }}.
         </div>
     </footer>
+    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
