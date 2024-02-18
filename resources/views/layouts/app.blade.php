@@ -40,7 +40,7 @@
 
                     <!-- Dropdown Menu -->
                     <div x-show="isOpen" @click.away="isOpen = false" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
-                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
                             Manage Account
                         </a>
                         <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">

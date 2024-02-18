@@ -20,15 +20,14 @@ use App\Http\Controllers\SearchController;
 
 Route::get('/', [ItemController::class, 'index'])->name('home');
 
-// Resource routes for items
 Route::resource('items', ItemController::class);
 
-// Resource routes for categories
 Route::resource('categories', CategoryController::class);
 
 Route::get('/dashboard', [ItemController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('home');
 
+//IMPORTANT - make 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -38,6 +37,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 
+
+//IMPORTNANT - make 
 Route::middleware('auth')->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/create', [MessageController::class, 'create'])->name('messages.create');
