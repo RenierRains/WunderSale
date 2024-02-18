@@ -4,7 +4,8 @@
 <div class="container mx-auto p-6">
     <h1 class="text-xl font-bold mb-4">Add a New Item</h1>
 
-    <form action="{{ route('items.store') }}" method="POST">
+    <!-- Add enctype attribute to support file upload -->
+    <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
@@ -28,6 +29,11 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+        </div>
+        <!-- imagetest!-->
+        <div class="mb-4">
+            <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+            <input type="file" name="image" id="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
 
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Add Item</button>
