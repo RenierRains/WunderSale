@@ -45,13 +45,25 @@
                     <i class="fa fa-envelope"></i>
                 </a>
             </div>
+            @else
+            <div class="flex items-center space-x-2">
+                <a href="{{ route('login') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-green-600">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
+                <a href="{{ route('login') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-yellow-600">
+                    <i class="fa fa-plus-circle"></i>
+                </a>
+                <a href="{{ route('login') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-red-600">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </div>
             @endauth
             <!-- Auth Links -->
             <div class="hidden sm:flex sm:items-center">
                 @auth
                 <div class="relative" x-data="{ isOpen: false }">
                     <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
-                        {{ Auth::user()->name }} <!-- Display authenticated user's name -->
+                        {{ Auth::user()->name }} <!-- change to id later maybe? ask feedback etc?-->
                     </button>
 
                     <!-- Dropdown Menu -->
