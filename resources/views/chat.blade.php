@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <chat-component></chat-component>
+    <div id="app">
+    <chat-component :conversation-id="{{ $conversationId }}"></chat-component>
+    </div>
 @endsection

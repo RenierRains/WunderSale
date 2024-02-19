@@ -8,42 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'from_user_id',
-        'to_user_id',
-        'body',
-        // optionally other fields like 'read_at' to track read receipt? mybe
-    ];
+    protected $fillable = ['body', 'user_id', 'conversation_id'];
 
-    /**
-     * dates.
-     *
-     * @var array<string>
-     */
-    protected $dates = ['deleted_at'];
-
-    /**
-     * Get user tht sent message.
-     */
-    public function sender()
-    {
-        return $this->belongsTo(User::class, 'from_user_id');
+    // Relationship with User
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get user that received message.
-     */
-    public function receiver()
-    {
-        return $this->belongsTo(User::class, 'to_user_id');
+    // Relationship with Conversation
+    public function conversation() {
+        return $this->belongsTo(Conversation::class);
     }
-
-    // can add methods to mark the message as read or other 
 }

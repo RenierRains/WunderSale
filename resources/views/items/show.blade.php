@@ -31,12 +31,12 @@
                 <div class="bg-gray-100 p-4 rounded-lg flex justify-between items-center">
                     <h3 class="text-lg font-semibold">
                         Sold by: <br><a href="{{ route('profile.show', $item->user->id) }}" class="font-semibold hover:underline">{{ $item->user->name }}</a>
-                    </h3><!-- CRITICAL change to actual route thank you -->
+                    </h3>
                     
                     <!-- CRITICAL change to actual route thank you -->
-                    <a href="{{ route('messages.create', ['recipient_id' => $item->user->id]) }}" class="hover:text-gray-600">
-                        <i class="fas fa-comment-dots fa-lg"></i>
-                    </a>
+                    <button onclick="startChat({{ $item->user->id }})">
+                    <i class="fas fa-comment-dots fa-lg"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -68,6 +68,52 @@
             @endforeach
         </div>
     </div>
+
+        <!-- ratings and reviews block -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden mt-8 p-4 text-gray-900">
+        <h3 class="text-xl font-bold mb-4">Ratings & Reviews</h3>
+        <div class="mb-4">
+            <span class="text-lg font-semibold">Average Rating:</span>
+            <span class="text-yellow-400">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="far fa-star"></i>
+            </span>
+            <span class="ml-2 text-gray-600">(4.5 out of 5)</span>
+        </div>
+        <div class="border-t border-gray-200 pt-4">
+            <div class="review">
+                <h4 class="text-lg font-semibold">Renier Dave Rosal Reyes</h4>
+                <span class="text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </span>
+                <p class="text-gray-600">"testapi1"</p>
+            </div>
+            <div class="review mt-4">
+                <h4 class="text-lg font-semibold">admin</h4>
+                <span class="text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </span>
+                <p class="text-gray-600">"test 2"</p>
+            </div>
+            <!-- Placeholder for more reviews -->
+        </div>
+        <!-- Optionally, you can add a link/button to write a review -->
+        <div class="mt-4">
+            <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Write a Review</a>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -86,6 +132,19 @@ function decreaseQuantity() {
         quantityInput.value = currentValue - 1;
     }
 }
+
+function startChat(sellerId) {
+    axios.post('/chat/start', { 
+        seller_id: sellerId,
+        _token: "{{ csrf_token() }}" // Include CSRF token for Laravel to handle the POST request
+    })
+    .then(response => {
+        // Assuming the response contains the ID of the conversation
+        window.location.href = `/chat/conversations/${response.data.conversation_id}`;
+    })
+    .catch(error => console.error(error));
+}
+
 </script>
 
 </script>

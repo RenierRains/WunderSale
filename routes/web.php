@@ -8,6 +8,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
 
 
 /*
@@ -68,10 +69,10 @@ Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->n
 
 Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy')->middleware('admin');
 
-Route::get('/chat/messages/{userId}', 'ChatController@fetchMessages');
-Route::post('/chat/send', 'ChatController@sendMessage');
-Route::get('/chat', function () {
-    return view('chat');
-})->middleware('auth');
+Route::post('/chat/start', [ChatController::class, 'startChat'])->middleware('auth')->name('chat.start');
+Route::get('/chat/conversations/{conversation}', [ChatController::class, 'fetchConversation'])->middleware('auth')->name('chat.conversation');
+Route::get('/chat/conversations/{conversation}/messages', 'ChatController@fetchMessages');
+Route::post('/chat/messages', 'ChatController@sendMessage');
+
 
 require __DIR__.'/auth.php';

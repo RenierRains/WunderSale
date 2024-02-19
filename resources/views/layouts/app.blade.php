@@ -9,7 +9,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- Scripts -->
-    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <script type="text/javascript">
     window.userId = {{ auth()->id() }};
@@ -122,9 +122,9 @@
 
     <main class="flex-grow">
         <div class="container mx-auto px-4 py-8">
-        <div id="app">
+        
             @yield('content')
-        </div>
+
         </div>
     </main>
 
@@ -135,6 +135,5 @@
     </footer>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
