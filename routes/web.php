@@ -69,10 +69,15 @@ Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->n
 
 Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy')->middleware('admin');
 
-Route::post('/chat/start', [ChatController::class, 'startChat'])->middleware('auth')->name('chat.start');
-Route::get('/chat/conversations/{conversation}', [ChatController::class, 'fetchConversation'])->middleware('auth')->name('chat.conversation');
-Route::get('/chat/conversations/{conversation}/messages', 'ChatController@fetchMessages');
-Route::post('/chat/messages', 'ChatController@sendMessage');
 
+    //dogshit test
+Route::get('/chat/{conversationId?}', [ChatController::class, 'showChatInterface'])
+    ->name('chat.interface')
+    ->middleware('auth');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.start');
+    Route::get('/chat/conversations/{conversationId}', [ChatController::class, 'fetchMessages'])->name('chat.conversations');
+    Route::post('/chat/messages', [ChatController::class, 'sendMessage'])->name('chat.messages');
+});
 
 require __DIR__.'/auth.php';

@@ -29,15 +29,15 @@ class MessageController extends Controller
 
         return view('messages.index', compact('conversations'));
     }
-    // Show form to create a new message
+    
     public function create(User $user)
     {
-        // Pass all users except the authenticated one to the view
+        
         $users = User::where('id', '!=', Auth::id())->get();
         return view('messages.create', compact('users', 'user'));
     }
 
-    // Store a new message
+   
     public function store(Request $request)
     {
         $request->validate([
@@ -51,7 +51,7 @@ class MessageController extends Controller
             'body' => $request->body,
         ]);
 
-        // Broadcast that a new message has been sent
+      
         broadcast(new MessageSent($message))->toOthers();
 
         return redirect()->route('messages.index')->with('success', 'Message sent successfully.');
@@ -71,7 +71,7 @@ class MessageController extends Controller
         return view('messages.show', compact('messages', 'otherUser'));
     }
 
-    // Fetch messages dynamically for AJAX calls
+    // Fetch4 AJAX 
     public function fetchMessages($userId)
     {
         $messages = Message::where(function($query) use ($userId) {

@@ -140,7 +140,7 @@ function startChat(sellerId) {
     })
     .then(response => {
         // Assuming the response contains the ID of the conversation
-        window.location.href = `/chat/conversations/${response.data.conversation_id}`;
+        window.location.href = `/chat/${response.data.conversation_id}`;
     })
     .catch(error => console.error(error));
 }
