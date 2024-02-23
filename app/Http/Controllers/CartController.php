@@ -32,4 +32,27 @@ class CartController extends Controller
         $cart->delete();
         return back()->with('success', 'Item removed from cart.');
     }
+
+    public function add(Request $request)
+    {
+        $request->validate([
+            'item_id' => 'required|exists:items,id',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric',
+        ]);
+
+        $cartItem = Cart::updateOrCreate(
+            [
+                'user_id' => Auth::id(),
+                'item_id' => $request->item_id,
+            ],
+            [
+                'quantity' => $request->quantity,
+                // Assuming you have a 'total_price' field to store the total price for the item based on quantity
+                'total_price' => $request->price * $request->quantity,
+            ]
+        );
+
+        return response()->json(['message' => 'Item added to cart successfully!']);
+    }
 }

@@ -24,7 +24,7 @@
 
                 <div class="flex space-x-2 mb-4">
                     <button class="flex-1 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Buy Now</button>
-                    <button class="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">Add to Cart</button>
+                    <button onclick="addToCart({{ $item->id }}, {{ $item->price }})" class="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">Add to Cart</button>
                 </div>
 
                 <!-- seller -->
@@ -133,16 +133,33 @@ function decreaseQuantity() {
     }
 }
 
-function startChat(sellerId) {
+/*function startChat(sellerId) {
     axios.post('/chat/start', { 
         seller_id: sellerId,
-        _token: "{{ csrf_token() }}" // Include CSRF token for Laravel to handle the POST request
+        _token: "{{ csrf_token() }}" 
     })
     .then(response => {
-        // Assuming the response contains the ID of the conversation
+        //ID of the conversation
         window.location.href = `/chat/${response.data.conversation_id}`;
     })
     .catch(error => console.error(error));
+}*/
+
+function addToCart(itemId, itemPrice) {
+    let quantity = parseInt(document.getElementById('quantity').value);
+    axios.post('/cart/add', {
+        item_id: itemId,
+        price: itemPrice,
+        quantity: quantity,
+        _token: "{{ csrf_token() }}" 
+    })
+    .then(response => {
+        alert('Item added to cart successfully!');
+    })
+    .catch(error => {
+        console.error(error);
+        alert('Failed to add item to cart.');
+    });
 }
 
 </script>
