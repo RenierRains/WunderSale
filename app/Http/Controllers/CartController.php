@@ -17,42 +17,69 @@ class CartController extends Controller
         return view('cart.index', compact('carts'));
     }
 
-    public function store(Request $request)
-    {
-        Cart::create([
-            'user_id' => Auth::id(),
-            'item_id' => $request->item_id,
-            'quantity' => $request->quantity,
-        ]);
-        return back()->with('success', 'Item added to cart.');
-    }
-
-    public function destroy(Cart $cart)
-    {
-        $cart->delete();
-        return back()->with('success', 'Item removed from cart.');
-    }
-
     public function add(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'item_id' => 'required|exists:items,id',
             'quantity' => 'required|integer|min:1',
             'price' => 'required|numeric',
         ]);
 
+        $totalPrice = $validated['price'] * $validated['quantity'];
+
         $cartItem = Cart::updateOrCreate(
             [
                 'user_id' => Auth::id(),
-                'item_id' => $request->item_id,
+                'item_id' => $validated['item_id'],
             ],
             [
-                'quantity' => $request->quantity,
-                // Assuming you have a 'total_price' field to store the total price for the item based on quantity
-                'total_price' => $request->price * $request->quantity,
+                'quantity' => $validated['quantity'],
+                'total_price' => $totalPrice,
             ]
         );
 
         return response()->json(['message' => 'Item added to cart successfully!']);
     }
+
+    public function remove(Request $request)
+    {
+        $request->validate(['cart_id' => 'required|exists:carts,id']);
+
+        $cartId = $request->cart_id;
+        $cart = Cart::where('id', $cartId)->where('user_id', Auth::id())->first();
+
+        if ($cart) {
+            $cart->delete();
+            return response()->json(['message' => 'Item removed successfully.']);
+        }
+
+        return response()->json(['message' => 'Item not found or you do not have permission to remove this item.'], 404);
+    }
+
+    public function changeQuantity(Request $request)
+    {
+        $request->validate([
+            'cart_id' => 'required|exists:carts,id',
+            'action' => 'required|in:increase,decrease',
+        ]);
+
+        $cart = Cart::where('id', $request->cart_id)->where('user_id', Auth::id())->firstOrFail();
+        
+        if ($request->action == 'increase') {
+            $cart->quantity += 1;
+        } else if ($request->action == 'decrease' && $cart->quantity > 1) { // Prevent quantity from going below 1
+            $cart->quantity -= 1;
+        }
+
+        $cart->total_price = $cart->quantity * $cart->item->price;
+        $cart->save();
+
+        return response()->json([
+            'quantity' => $cart->quantity,
+            'total_price' => $cart->total_price,
+        ]);
+    }
+
+
+
 }
