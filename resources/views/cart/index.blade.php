@@ -13,7 +13,8 @@
         <div class="flex flex-col">
             @foreach ($carts as $cart)
                 <div class="flex flex-row justify-between items-center border-b py-4" id="cart-item-{{ $cart->id }}">
-                    <div class="flex flex-row items-center">
+                    <div class="flex items-center">
+                        <input type="checkbox" class="item-checkbox mr-4" data-price="{{ $cart->total_price }}" onchange="updateTotal()">
                         <img src="{{ optional($cart->item)->image ? asset('storage/' . $cart->item->image) : 'https://via.placeholder.com/150' }}" alt="{{ optional($cart->item)->name }}" class="w-20 h-20 object-cover mr-4">
                         <div>
                             <a href="{{ optional($cart->item)->id ? route('items.show', $cart->item->id) : '#' }}" class="text-lg font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">{{ optional($cart->item)->name ?? 'Item not found' }}</a>
@@ -71,5 +72,29 @@ function changeQuantity(action, cartId) {
     });
 
 }
+
+function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('.item-checkbox:checked').forEach((checkbox) => {
+        total += parseFloat(checkbox.dataset.price);
+    });
+
+    document.getElementById('selected-total').innerText = total.toFixed(2);
+    document.getElementById('checkout-button').disabled = total === 0;
+}
+
+function checkout() {
+    let selectedItems = [];
+    document.querySelectorAll('.item-checkbox:checked').forEach((checkbox) => {
+        selectedItems.push(checkbox.closest('div[id^="cart-item-"]').id.replace('cart-item-', ''));
+    });
+
+    // checkout
+    // placeholder
+    console.log('Selected items for checkout:', selectedItems);
+    // ex: redirect to a checkout page with selected item IDs go
+    // location.href = '/checkout?items=' + selectedItems.join(','); // ???
+}
 </script>
 @endsection
+
