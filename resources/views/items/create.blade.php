@@ -4,7 +4,6 @@
 <div class="container mx-auto p-6">
     <h1 class="text-xl text-black font-bold mb-4">List a New Item</h1>
 
-    <!-- Add enctype attribute to support file upload -->
     <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
@@ -33,7 +32,7 @@
             <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">Quantity:</label>
             <input type="number" name="quantity" id="quantity" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" min="1" value="1" required>
         </div>
-        
+
         </div>
         <!-- imagetest!-->
         <div class="mb-4">

@@ -102,12 +102,18 @@ function changeQuantity(action, cartId) {
 function updateTotal() {
     let total = 0;
     document.querySelectorAll('.item-checkbox:checked').forEach((checkbox) => {
-        total += parseFloat(checkbox.dataset.price);
+        const cartId = checkbox.dataset.cartId;
+        const quantityInput = document.querySelector(`.quantity-input[data-cart-id="${cartId}"]`);
+        const quantity = parseInt(quantityInput.value);
+        const pricePerItem = parseFloat(checkbox.dataset.price);
+        
+        total += pricePerItem * quantity; // test new
     });
 
     document.getElementById('selected-total').innerText = total.toFixed(2);
     document.getElementById('checkout-button').disabled = !document.querySelectorAll('.item-checkbox:checked').length;
 }
+
 
 function checkout() {
     let selectedItems = Array.from(document.querySelectorAll('.item-checkbox:checked')).map(checkbox => checkbox.value);

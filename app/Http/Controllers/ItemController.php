@@ -42,11 +42,12 @@ class ItemController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|max:2048', //image file
             'quantity' => 'required|integer|min:1',
+            'image' => 'nullable|image|max:2048', //image file
+            
         ]);
 
-        $data = $request->only(['name', 'description', 'price', 'category_id']);
+        $data = $request->only(['name', 'description', 'price', 'category_id','quantity']);
         $data['user_id'] = Auth::id(); // user to item association 
 
         if ($request->hasFile('image')) {
@@ -70,7 +71,7 @@ class ItemController extends Controller
             abort(403);
         }
 
-        $categories = Category::all(); //
+        $categories = Category::all(); 
         return view('items.edit', compact('item', 'categories'));
     }
 
@@ -81,14 +82,15 @@ class ItemController extends Controller
         }
     
         $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'sometimes|max:255',
             'description' => 'required',
-            'price' => 'required|numeric',
+            'price' => 'sometimes|numeric',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|max:2048',
+            'quantity' => 'required|integer|min:1',
         ]);
 
-        $data = $request->only(['name', 'description', 'price', 'category_id']);
+        $data = $request->only(['name', 'description', 'price', 'category_id','quantity']);
 
         if ($request->hasFile('image')) {
             // Delete the old image if it exists

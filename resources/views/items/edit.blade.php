@@ -6,12 +6,12 @@
 
     <form action="{{ route('items.update', $item->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT') <!-- Specify the method to be PUT for updating -->
+        @method('PUT') 
 
         <div class="mb-4">
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
             <!--<input type="text" name="name" id="name" value="{{ $item->name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">-->
-            <label for="price" class="block text-red-500 text-sm font-bold mb-2">disabled temporarily incase of abuse!</label>
+            <label for="price" class="block text-red-500 text-sm font-bold mb-2">disabled temporarily incase of abuse</label>
         </div>
 
         <div class="mb-4">
@@ -22,7 +22,12 @@
         <div class="mb-4">
             <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Price:</label>
             <!-- <input type="text" name="price" id="price" value="{{ $item->price }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">  -->
-            <label for="price" class="block text-red-500 text-sm font-bold mb-2">disabled temporarily incase of abuse!</label>
+            <label for="price" class="block text-red-500 text-sm font-bold mb-2">disabled temporarily incase of abuse</label>
+        </div>
+
+        <div class="mb-4">
+            <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" min="1" value="1" required>
         </div>
 
         <div class="mb-4">
@@ -40,6 +45,15 @@
         </div>
 
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Update Item</button>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     </form>
 </div>
 @endsection
