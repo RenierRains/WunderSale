@@ -25,6 +25,8 @@ class MessageSent implements ShouldBroadcastNow
     {
         return new PrivateChannel('chat.'.$this->message->to_user_id);
     }
+
+    //ugh please test 
 }
 
 
