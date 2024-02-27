@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    protected $fillable = ['name', 'description', 'price', 'category_id', 'user_id', 'image'];
+    protected $fillable = ['name', 'description', 'price', 'category_id', 'user_id', 'image', 'quantity'];
 
     public function user() {
         return $this->belongsTo(User::class);

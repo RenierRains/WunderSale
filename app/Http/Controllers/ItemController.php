@@ -43,6 +43,7 @@ class ItemController extends Controller
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|max:2048', //image file
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $data = $request->only(['name', 'description', 'price', 'category_id']);

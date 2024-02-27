@@ -14,11 +14,12 @@
             <div class="md:w-1/2 p-4 text-gray-900">
                 <h2 class="text-2xl font-bold mb-1">{{ $item->name }}</h2>
                 <p class="mb-3">₱{{ number_format($item->price, 2) }}</p>
+                <p class="text-sm text-gray-600">Available left: {{ $item->quantity }}</p>
                 
                 <!-- quantity -->
                 <div class="mb-4 flex items-center">
                     <button onclick="decreaseQuantity()" class="px-2 py-1 text-lg border rounded">-</button>
-                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="99" class="mx-2 border text-center w-16">
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ $item->quantity }}" class="mx-2 border text-center w-16">
                     <button onclick="increaseQuantity({{ $item->quantity }})" class="px-2 py-1 text-lg border rounded">+</button>
                 </div>
 
@@ -117,13 +118,15 @@
 </div>
 
 <script>
-function increaseQuantity() {
+function increaseQuantity(maxQuantity) {
     let quantityInput = document.getElementById('quantity');
     let currentValue = parseInt(quantityInput.value);
-    if (currentValue < 99) {
+    let max = maxQuantity || parseInt(quantityInput.max); // Use maxQuantity argument or max attribute
+    if (currentValue < max) {
         quantityInput.value = currentValue + 1;
     }
 }
+
 
 function decreaseQuantity() {
     let quantityInput = document.getElementById('quantity');
@@ -139,7 +142,6 @@ function decreaseQuantity() {
         _token: "{{ csrf_token() }}" 
     })
     .then(response => {
-        //ID of the conversation
         window.location.href = `/chat/${response.data.conversation_id}`;
     })
     .catch(error => console.error(error));
@@ -154,7 +156,7 @@ function addToCart(itemId, itemPrice) {
         _token: "{{ csrf_token() }}" 
     })
     .then(response => {
-        alert('Item added to cart successfully!');
+        alert('Item added to cart!');
     })
     .catch(error => {
         console.error(error);
