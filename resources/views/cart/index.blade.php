@@ -31,10 +31,18 @@
                             <div>
                                 <a href="{{ optional($cart->item)->id ? route('items.show', $cart->item->id) : '#' }}" class="text-lg font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">{{ optional($cart->item)->name ?? 'Item not found' }}</a>
                                 <p class="text-gray-600">₱{{ number_format(optional($cart->item)->price, 2) }}</p>
+                                <div class="flex items-center">
+                                    <button type="button" onclick="changeQuantity('decrement', {{ $cart->id }})" class="px-2 py-1 bg-gray-300 text-gray-600 hover:bg-gray-400 rounded-l">-</button>
+                                    <input type="text" class="quantity-input w-12 text-center bg-gray-100 border-none outline-none" value="{{ $cart->quantity }}" data-cart-id="{{ $cart->id }}" readonly>
+                                    <button type="button" onclick="changeQuantity('increment', {{ $cart->id }})" class="px-2 py-1 bg-gray-300 text-gray-600 hover:bg-gray-400 rounded-r">+</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span class="text-lg">₱{{ number_format($cart->total_price, 2) }}</span>
+                        <div class="flex items-center">
+                            <span class="total-price text-lg" data-cart-id="{{ $cart->id }}">₱{{ number_format($cart->total_price, 2) }}</span>
+                            <button onclick="removeFromCart({{ $cart->id }})" class="ml-4 text-red-500 hover:text-red-700">
+                                <i class="fa fa-times"></i>
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -54,7 +62,6 @@
     </div>
 </div>
 
-
 <script>
 function removeFromCart(cartId) {
     axios.post('/cart/remove', {
@@ -62,15 +69,16 @@ function removeFromCart(cartId) {
         _token: "{{ csrf_token() }}"
     })
     .then(response => {
-        // dynamic test
         const cartItemElement = document.getElementById(`cart-item-${cartId}`);
         cartItemElement.remove(); 
+        updateTotal();
     })
     .catch(error => {
         console.error(error);
         alert('Failed to remove item from cart.');
     });
 }
+
 function changeQuantity(action, cartId) {
     axios.post('/cart/change-quantity', {
         action: action,
@@ -78,18 +86,17 @@ function changeQuantity(action, cartId) {
         _token: "{{ csrf_token() }}"
     })
     .then(response => {
-        // dynamic test 2
         const quantityInput = document.querySelector(`.quantity-input[data-cart-id="${cartId}"]`);
         const totalPriceElement = document.querySelector(`.total-price[data-cart-id="${cartId}"]`);
 
         quantityInput.value = response.data.quantity;
-        totalPriceElement.innerHTML = `Total: ₱${response.data.total_price.toFixed(2)}`;
+        totalPriceElement.innerText = `₱${response.data.total_price.toFixed(2)}`;
+        updateTotal(); 
     })
     .catch(error => {
         console.error(error);
         alert('Failed to update quantity.');
     });
-
 }
 
 function updateTotal() {
@@ -104,16 +111,7 @@ function updateTotal() {
 
 function checkout() {
     let selectedItems = Array.from(document.querySelectorAll('.item-checkbox:checked')).map(checkbox => checkbox.value);
-    
-    if (selectedItems.length > 0) {
-        // Here you would typically submit the form or redirect to a checkout page with the selected items
-        // For demonstration purposes, we'll log the selected items to the console
-        console.log('Checking out with items:', selectedItems);
-        
-        // Example: Redirect to a checkout page, passing the selected items as query parameters
-        // location.href = `/checkout?items=${selectedItems.join(',')}`;
-    }
+    // AAAAAAAAAAAAAAAAAAAAAAAA GO ON???
 }
 </script>
 @endsection
-

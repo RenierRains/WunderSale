@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $carts = Cart::where('user_id', Auth::id())->get();
         return view('cart.index', compact('carts'));
     }
 
-    public function add(Request $request)
-    {
+    public function add(Request $request){
         $validated = $request->validate([
             'item_id' => 'required|exists:items,id',
             'quantity' => 'required|integer|min:1',
@@ -41,8 +39,7 @@ class CartController extends Controller
         return response()->json(['message' => 'Item added to cart successfully!']);
     }
 
-    public function remove(Request $request)
-    {
+    public function remove(Request $request){
         $request->validate(['cart_id' => 'required|exists:carts,id']);
 
         $cartId = $request->cart_id;
@@ -56,27 +53,21 @@ class CartController extends Controller
         return response()->json(['message' => 'Item not found or you do not have permission to remove this item.'], 404);
     }
 
-    public function changeQuantity(Request $request)
-    {
-        $request->validate([
-            'cart_id' => 'required|exists:carts,id',
-            'action' => 'required|in:increase,decrease',
-        ]);
-
-        $cart = Cart::where('id', $request->cart_id)->where('user_id', Auth::id())->firstOrFail();
-        
-        if ($request->action == 'increase') {
-            $cart->quantity += 1;
-        } else if ($request->action == 'decrease' && $cart->quantity > 1) { // Prevent quantity from going below 1
-            $cart->quantity -= 1;
+    public function changeQuantity(Request $request) {
+        $cart = Cart::find($request->cart_id);
+        if ($request->action == 'increment') {
+            $cart->quantity++;
+        } elseif ($request->action == 'decrement') {
+            $cart->quantity > 1 ? $cart->quantity-- : 1;
         }
-
-        $cart->total_price = $cart->quantity * $cart->item->price;
         $cart->save();
-
+    
+        $totalPrice = $cart->quantity * $cart->item->price;
+    
         return response()->json([
+            'success' => true,
             'quantity' => $cart->quantity,
-            'total_price' => $cart->total_price,
+            'total_price' => $totalPrice,
         ]);
     }
 
