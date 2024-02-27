@@ -22,7 +22,7 @@
                         </a>
                     </div>
                 @empty
-                    <p>No items uploaded yet.</p>
+                    <p class="text-grey-600" >No items uploaded yet.</p>
                 @endforelse
             </div>
         </div>

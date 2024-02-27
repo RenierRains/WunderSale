@@ -13,7 +13,7 @@
                     </a>
                     <div class="p-4 bg-white">
                         <a href="{{ route('items.show', $item->id) }}" class="block text-lg font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">{{ $item->name }}</a>
-                        <p class="text-gray-600 mt-1">${{ number_format($item->price, 2) }}</p>
+                        <p class="text-gray-600 mt-1">₱{{ number_format($item->price, 2) }}</p>
                         <p class="text-gray-500 text-sm mt-2">{{ Str::limit($item->description, 50) }}</p>
                     </div>
                 </div>

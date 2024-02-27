@@ -19,7 +19,7 @@
     <style> 
         .messages {
         display: flex;
-        flex-direction: column-reverse; /* Newest messages at the bottom test */
+        flex-direction: column-reverse; /* Newest messages at the bottom */
         overflow-y: auto;}
 
         /* For Webkit browsers like Chrome, Safari */
@@ -35,72 +35,72 @@
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen bg-gray-100">
+<body class="flex flex-col min-h-screen bg-white text-gray-800">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <header class="bg-blue-500 shadow-md sticky top-0 z-50">
+    <header class="bg-[#112D4E] shadow-md sticky top-0 z-50">
         <nav class="container mx-auto flex justify-between items-center p-4 text-white">
             <a href="/" class="text-lg font-semibold">{{ config('app.name', 'WunderSale') }}</a>
             <!-- Search -->
             <form action="{{ route('search') }}" method="GET" class="flex items-center flex-grow mx-4">
-            <input type="text" name="query" placeholder="Search in WunderSale" class="text-black px-4 py-2 w-full rounded-lg focus:outline-none" required>
-            <button type="submit" class="ml-2 px-4 py-2 bg-white-500 text-white rounded-lg hover:bg-blue-600">
+            <input type="text" name="query" placeholder="Search in WunderSale" class="px-4 py-2 w-full rounded-lg focus:outline-none" required>
+            <button type="submit" class="ml-2 px-4 py-2 bg-[#FABD1E] text-gray-800 rounded-lg hover:bg-[#F9A602]">
                 <i class="fa fa-search"></i>
             </button>
             </form>
             @auth
-            <div class="flex items-center space-x-2">
-                <a href="{{ route('cart.index') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-green-600">
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('cart.index') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-shopping-cart"></i>
                 </a>
-                <a href="{{ route('items.create') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-yellow-600">
+                <a href="{{ route('items.create') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-plus-circle"></i>
                 </a>
-                <a href="{{ route('items.index') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-red-600">
+                <a href="{{ route('items.index') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white">
                     <i class="fa fa-envelope"></i>
                 </a>
             </div>
             @else
-            <div class="flex items-center space-x-2">
-                <a href="{{ route('login') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-green-600">
+            <div class="flex items-center space-x-4"> 
+                <a href="{{ route('login') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-shopping-cart"></i>
                 </a>
-                <a href="{{ route('login') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-yellow-600">
+                <a href="{{ route('login') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-plus-circle"></i>
                 </a>
-                <a href="{{ route('login') }}" class="px-2 py-2 bg-blue-500 rounded-lg hover:bg-red-600">
+                <a href="{{ route('login') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-envelope"></i>
                 </a>
             </div>
             @endauth
             <!-- Auth Links -->
-            <div class="hidden sm:flex sm:items-center">
+            <div class="flex items-center mx-4">
                 @auth
-                <div class="relative" x-data="{ isOpen: false }">
-                    <button @click="isOpen = !isOpen" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
-                        {{ Auth::user()->student_number }} <!-- change to id later maybe? ask feedback etc?-->
+                <div class="relative space-x-4" x-data="{ isOpen: false }">
+                    <button @click="isOpen = !isOpen" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none">
+                        {{ Auth::user()->student_number }}
                     </button>
 
                     <!-- Dropdown Menu -->
                     <div x-show="isOpen" @click.away="isOpen = false" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
-                        <a href="{{ route('profile.show', Auth::user()->id) }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('profile.show', Auth::user()->id) }}" class="block px-4 py-2 text-sm text-gray-800 hover:bg-green-500 hover:text-white">
                             My Profile
                         </a>
-                        <a href="{{ route('items.user') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('items.user') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Your Products
                         </a>
-                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Manage Account
                         </a>
-                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Your Orders
                         </a>
-                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Liked Items
                         </a>
-                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Your Reviews
                         </a>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Logout
                         </a>
                     </div>
@@ -111,9 +111,9 @@
                 </form>
 
                 @else
-                    <a href="{{ route('login') }}" class="text-sm text-white font-semibold hover:text-gray-200">Log in</a>
+                    <a href="{{ route('login') }}" class="text-sm font-semibold hover:text-gray-600">Log in</a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-white font-semibold hover:text-gray-200">Register</a>
+                        <a href="{{ route('register') }}" class="ml-4 text-sm font-semibold hover:text-gray-600">Register</a>
                     @endif
                 @endauth
             </div>
@@ -128,7 +128,7 @@
         </div>
     </main>
 
-    <footer class="bg-blue-500 text-white text-center p-4 shadow-md">
+    <footer class="bg-[#112D4E] text-white text-center p-4 shadow-md">
         <div class="container mx-auto">
             &copy; {{ date('Y') }} {{ config('app.name', 'WunderSale') }}.
         </div>

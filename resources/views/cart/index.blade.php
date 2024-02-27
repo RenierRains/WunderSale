@@ -1,40 +1,59 @@
 @extends('layouts.app')
 
+@section('head')
+<style>
+    .order-summary {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 20px;
+    }
+</style>
+@endsection
+
 @section('content')
-<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-xl text-black font-bold mb-4">Your Cart</h1>
-    
-    @if($carts->isEmpty())
-        <div class="text-center">
-            <p class="text-gray-600 mb-4">Your cart is empty.</p>
-            <a href="{{ route('items.index') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Start Shopping</a>
-        </div>
-    @else
-        <div class="flex flex-col">
-            @foreach ($carts as $cart)
-                <div class="flex flex-row justify-between items-center border-b py-4" id="cart-item-{{ $cart->id }}">
-                    <div class="flex items-center">
-                        <input type="checkbox" class="item-checkbox mr-4" data-price="{{ $cart->total_price }}" onchange="updateTotal()">
-                        <img src="{{ optional($cart->item)->image ? asset('storage/' . $cart->item->image) : 'https://via.placeholder.com/150' }}" alt="{{ optional($cart->item)->name }}" class="w-20 h-20 object-cover mr-4">
-                        <div>
-                            <a href="{{ optional($cart->item)->id ? route('items.show', $cart->item->id) : '#' }}" class="text-lg font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">{{ optional($cart->item)->name ?? 'Item not found' }}</a>
-                            <p class="text-gray-600">₱{{ number_format(optional($cart->item)->price, 2) }}</p>
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap">
+    <div class="w-full lg:w-3/4 pr-4 mb-6">
+        <h1 class="text-xl text-black font-bold mb-4">Your Cart</h1>
+        
+        @if($carts->isEmpty())
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">Your cart is empty.</p>
+                <a href="{{ route('items.index') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Start Shopping</a>
+            </div>
+        @else
+            <form id="cart-form">
+                @csrf
+                @foreach ($carts as $cart)
+                    <div class="flex justify-between items-center border-b py-4" id="cart-item-{{ $cart->id }}">
+                        <div class="flex items-center">
+                            <input type="checkbox" name="selected_items[]" value="{{ $cart->id }}" class="item-checkbox mr-4" data-cart-id="{{ $cart->id }}" data-price="{{ $cart->total_price }}" onchange="updateTotal()">
+                            <img src="{{ optional($cart->item)->image ? asset('storage/' . $cart->item->image) : 'https://via.placeholder.com/150' }}" alt="{{ optional($cart->item)->name }}" class="w-20 h-20 object-cover mr-4">
+                            <div>
+                                <a href="{{ optional($cart->item)->id ? route('items.show', $cart->item->id) : '#' }}" class="text-lg font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">{{ optional($cart->item)->name ?? 'Item not found' }}</a>
+                                <p class="text-gray-600">₱{{ number_format(optional($cart->item)->price, 2) }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-lg">₱{{ number_format($cart->total_price, 2) }}</span>
                         </div>
                     </div>
-                    <div class="flex items-center">
-                        <button onclick="changeQuantity('decrease', {{ $cart->id }})" class="px-2 py-1 text-lg bg-gray-300 text-gray-700 rounded hover:bg-gray-400">-</button>
-                        <input type="text" value="{{ $cart->quantity }}" class="quantity-input mx-2 border text-center w-16 text-black" readonly data-cart-id="{{ $cart->id }}">
-                        <button onclick="changeQuantity('increase', {{ $cart->id }})" class="px-2 py-1 text-lg bg-gray-300 text-gray-700 rounded hover:bg-gray-400">+</button>
-                    </div>
-                    <div>
-                        <span class="text-lg text-black font-semibold total-price" data-cart-id="{{ $cart->id }}">Total: ₱{{ number_format($cart->total_price, 2) }}</span>
-                    </div>
-                    <button onclick="removeFromCart({{ $cart->id }})" class="remove-item-btn px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-300">Remove</button>
+                @endforeach
+            </form>
+        @endif
+    </div>
+    <div class="w-full lg:w-1/4 pl-4">
+        <div class="order-summary">
+            <div class="bg-white p-4 shadow rounded">
+                <h2 class="text-lg font-bold mb-4">Order Summary</h2>
+                <div class="mb-4">
+                    <span class="text-gray-600">Total: ₱</span><span id="selected-total">0.00</span>
                 </div>
-            @endforeach
+                <button id="checkout-button" onclick="checkout()" class="w-full px-6 py-2 bg-green-500 text-white rounded hover:bg-green-700 disabled:opacity-50" disabled>Checkout</button>
+            </div>
         </div>
-    @endif
+    </div>
 </div>
+
 
 <script>
 function removeFromCart(cartId) {
@@ -80,20 +99,20 @@ function updateTotal() {
     });
 
     document.getElementById('selected-total').innerText = total.toFixed(2);
-    document.getElementById('checkout-button').disabled = total === 0;
+    document.getElementById('checkout-button').disabled = !document.querySelectorAll('.item-checkbox:checked').length;
 }
 
 function checkout() {
-    let selectedItems = [];
-    document.querySelectorAll('.item-checkbox:checked').forEach((checkbox) => {
-        selectedItems.push(checkbox.closest('div[id^="cart-item-"]').id.replace('cart-item-', ''));
-    });
-
-    // checkout
-    // placeholder
-    console.log('Selected items for checkout:', selectedItems);
-    // ex: redirect to a checkout page with selected item IDs go
-    // location.href = '/checkout?items=' + selectedItems.join(','); // ???
+    let selectedItems = Array.from(document.querySelectorAll('.item-checkbox:checked')).map(checkbox => checkbox.value);
+    
+    if (selectedItems.length > 0) {
+        // Here you would typically submit the form or redirect to a checkout page with the selected items
+        // For demonstration purposes, we'll log the selected items to the console
+        console.log('Checking out with items:', selectedItems);
+        
+        // Example: Redirect to a checkout page, passing the selected items as query parameters
+        // location.href = `/checkout?items=${selectedItems.join(',')}`;
+    }
 }
 </script>
 @endsection
