@@ -55,7 +55,7 @@
                 <a href="{{ route('items.create') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-plus-circle"></i>
                 </a>
-                <a href="{{ route('items.index') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white">
+                <a href="{{ route('home') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white">
                     <i class="fa fa-envelope"></i>
                 </a>
             </div>
@@ -91,13 +91,13 @@
                         <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Manage Account
                         </a>
-                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
+                        <a href="{{ route('home') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Your Orders
                         </a>
-                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
+                        <a href="{{ route('home') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Liked Items
                         </a>
-                        <a href="{{ route('items.index') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
+                        <a href="{{ route('home') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Your Reviews
                         </a>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">

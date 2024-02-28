@@ -18,7 +18,7 @@
         @if($carts->isEmpty())
             <div class="text-center">
                 <p class="text-gray-600 mb-4">Your cart is empty.</p>
-                <a href="{{ route('items.index') }}" class="px-4 py-2 bg-[#112D4E] text-white rounded hover:bg-blue-700">Start Shopping</a>
+                <a href="{{ route('home') }}" class="px-4 py-2 bg-[#112D4E] text-white rounded hover:bg-blue-700">Start Shopping</a>
             </div>
         @else
             <form id="cart-form">

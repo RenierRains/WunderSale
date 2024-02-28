@@ -7,7 +7,7 @@
         <div class="md:flex">
             <!-- image -->
             <div class="md:w-1/2">
-                <img src="{{ $item->image ? asset('storage/' . $item->image) : 'https://via.placeholder.com/350x150' }}" alt="{{ $item->name }}" class="object-cover w-full h-full">
+                <img src="{{ $item->image ? asset('storage/app/public/items/' . $item->image) : 'https://via.placeholder.com/350x150' }}" alt="{{ $item->name }}" class="object-cover w-full h-full">
             </div>
 
             <!-- details -->
@@ -31,11 +31,18 @@
                 <!-- seller -->
                 <div class="bg-gray-100 p-4 rounded-lg flex justify-between items-center">
                     <h3 class="text-lg font-semibold">
-                        Sold by: <br><a href="{{ route('profile.show', $item->user->id) }}" class="font-semibold hover:underline">{{ $item->user->name }}</a>
+                        @isset($item->user)
+                            Sold by: <br>
+                            <a href="{{ route('profile.show', $item->user->id) }}" class="font-semibold hover:underline">
+                                {{ $item->user->name }}
+                            </a>
+                        @else
+                            Sold by: <br> Unknown User
+                        @endisset
                     </h3>
                     
                     <!-- CRITICAL change to actual route thank you -->
-                    <button onclick="startChat({{ $item->user->id }})">
+                   
                     <i class="fas fa-comment-dots fa-lg"></i>
                     </button>
                 </div>
@@ -107,9 +114,9 @@
                 </span>
                 <p class="text-gray-600">"test 2"</p>
             </div>
-            <!-- Placeholder for more reviews -->
+            <!-- placeholder for more reviews -->
         </div>
-        <!-- Optionally, you can add a link/button to write a review -->
+        <!-- optionallyadd a link/button to write a review -->
         <div class="mt-4">
             <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Write a Review</a>
         </div>
@@ -121,7 +128,7 @@
 function increaseQuantity(maxQuantity) {
     let quantityInput = document.getElementById('quantity');
     let currentValue = parseInt(quantityInput.value);
-    let max = maxQuantity || parseInt(quantityInput.max); // Use maxQuantity argument or max attribute
+    let max = maxQuantity || parseInt(quantityInput.max); // maxQuantity argument or max attribute
     if (currentValue < max) {
         quantityInput.value = currentValue + 1;
     }

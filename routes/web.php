@@ -8,7 +8,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ChatController;
+
 
 
 /*
@@ -25,16 +25,15 @@ use App\Http\Controllers\ChatController;
 Route::get('/', [ItemController::class, 'index'])->name('home');
 
 Route::resource('items', ItemController::class);
+Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::get('/items/{id}', [ItemController::class, 'show'])->name('items.show');
 Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit')->middleware('auth');
 Route::put('/items/{item}', [ItemController::class, 'update'])->name('items.update')->middleware('auth');
 
-
-
 Route::resource('categories', CategoryController::class);
 
 Route::get('/dashboard', [ItemController::class, 'index'])
-->middleware(['auth', 'verified'])->name('home');
+->middleware(['auth', 'verified'])->name('dashboard');
 
 //IMPORTANT - middleware auth make 
 Route::middleware('auth')->group(function () {
@@ -73,14 +72,6 @@ Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->n
 Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy')->middleware('admin');
 
 
-    //dogshit test
-Route::get('/chat/{conversationId?}', [ChatController::class, 'showChatInterface'])
-    ->name('chat.interface')
-    ->middleware('auth');
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/chat/start', [ChatController::class, 'startChat'])->name('chat.start');
-    Route::get('/chat/conversations/{conversationId}', [ChatController::class, 'fetchMessages'])->name('chat.conversations');
-    Route::post('/chat/messages', [ChatController::class, 'sendMessage'])->name('chat.messages');
-});
+  
 
 require __DIR__.'/auth.php';
