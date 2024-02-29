@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CategoryController;
@@ -8,6 +8,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 
 
 
@@ -59,7 +60,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
-    // ud operations needed
+    // ud operations needed XD
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');

@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ItemAPIController;
+use App\Http\Controllers\API\ProfileAPIController;
+use App\Http\Controllers\API\CategoryAPIController;
+use App\Http\Controllers\API\CartAPIController;
+use App\Http\Controllers\API\AdminAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +21,38 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+// Item routes
+Route::apiResource('items', ItemController::class);
+// for user specific items
+Route::get('user/items', [ItemController::class, 'userItems'])->middleware('auth:api');
+
+// Profile routes
+Route::middleware('auth:api')->group(function () {
+    Route::get('profile/edit', [ProfileController::class, 'edit']);
+    Route::put('profile/update', [ProfileController::class, 'update']);
+    Route::delete('profile/delete', [ProfileController::class, 'destroy']);
+    Route::get('seller/{user}/profile', [ProfileController::class, 'showSellerProfile']);
+});
+
+// Category routes
+Route::get('categories', [CategoryController::class, 'index']);
+Route::post('categories', [CategoryController::class, 'store'])->middleware('auth:api');
+
+
+// Cart routes
+Route::middleware('auth:api')->group(function () {
+    Route::get('cart', [CartController::class, 'index']);
+    Route::post('cart/add', [CartController::class, 'add']);
+    Route::delete('cart/remove', [CartController::class, 'remove']);
+    Route::post('cart/change-quantity', [CartController::class, 'changeQuantity']);
+});
+
+// Admin routes 
+Route::middleware(['auth:api', 'is_admin'])->group(function () {
+    Route::get('admin/users', [AdminController::class, 'users']);
+    Route::get('admin/items', [AdminController::class, 'items']);
+    Route::delete('admin/user/{user}', [AdminController::class, 'destroyUser']);
 });
