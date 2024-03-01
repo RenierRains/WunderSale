@@ -7,7 +7,7 @@
         <div class="md:flex">
             <!-- image -->
             <div class="md:w-1/2">
-                <img src="{{ $item->image ? asset('storage/app/public/items/' . $item->image) : 'https://via.placeholder.com/350x150' }}" alt="{{ $item->name }}" class="object-cover w-full h-full">
+                <img src="{{ $item->image ? asset('storage/' . $item->image) : 'https://via.placeholder.com/350x150' }}" alt="{{ $item->name }}" class="object-cover w-full h-full">
             </div>
 
             <!-- details -->
