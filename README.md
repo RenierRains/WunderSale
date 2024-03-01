@@ -14,6 +14,6 @@ WunderSale is an android application and website designed exclusively for studen
 
 ## Technologies Used
 
-- **Website**: Laravel, Laravel Breeze, Blade with Alpine.js, Tailwind CSS, MySQL
-- **Android Application**: Kotlin, Android Studio ,----
+- **Website**: Laravel, Blade with Alpine.js, Tailwind CSS, MySQL
+- **Android Application**: Kotlin, Android Studio , RetroFrot
 
