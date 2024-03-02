@@ -43,12 +43,14 @@
                 <img src="{{ asset('storage/logo.png') }}" alt="WunderSale" class="h-20">
             </a>
             <!-- Search -->
-             <form action="{{ route('search') }}" method="GET" class="flex items-center flex-grow mx-4">
-                <input type="text" name="query" placeholder="Search in WunderSale" class="px-4 py-2 w-full rounded-lg focus:outline-none text-black" required>
-                <button type="submit" class="ml-2 px-4 py-2 bg-[#FABD1E] text-gray-800 rounded-lg hover:bg-[#F9A602]">
+            <div class="flex items-center flex-grow mx-4 bg-white border rounded-lg overflow-hidden">
+            <form action="{{ route('search') }}" method="GET" class="w-full flex">
+                <input type="text" name="query" placeholder="Search in WunderSale" class="pl-4 py-2 w-full focus:outline-none text-black border-none" required>
+                <button type="submit" class="px-4 py-2 bg-[#FABD1E] text-gray-800 hover:bg-[#F9A602] border-none">
                     <i class="fa fa-search"></i>
                 </button>
             </form>
+            </div>
             @auth
             <div class="flex items-center space-x-4">
                 <a href="{{ route('cart.index') }}" class="px-3 py-3 bg-green-500 rounded-lg hover:bg-green-600 text-white"> 
