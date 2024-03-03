@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // Item routes
-Route::apiResource('items', ItemController::class);
+Route::apiResource('items', ItemAPIController::class);
 // for user specific items
 Route::get('user/items', [ItemController::class, 'userItems'])->middleware('auth:api');
 
