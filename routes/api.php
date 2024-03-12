@@ -7,6 +7,8 @@ use App\Http\Controllers\API\ProfileAPIController;
 use App\Http\Controllers\API\CategoryAPIController;
 use App\Http\Controllers\API\CartAPIController;
 use App\Http\Controllers\API\AdminAPIController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +58,9 @@ Route::middleware(['auth:api', 'is_admin'])->group(function () {
     Route::get('admin/items', [AdminController::class, 'items']);
     Route::delete('admin/user/{user}', [AdminController::class, 'destroyUser']);
 });
+
+// Login
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+// Registration
+Route::post('/register', [RegisteredUserController::class, 'store']);

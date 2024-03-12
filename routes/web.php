@@ -9,6 +9,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderController;
 
 
 
@@ -36,7 +37,7 @@ Route::resource('categories', CategoryController::class);
 Route::get('/dashboard', [ItemController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('dashboard');
 
-//IMPORTANT - middleware auth make 
+//auth middleware
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -46,6 +47,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/add', [CartController::class, 'add']);
     Route::post('/cart/remove', [CartController::class, 'remove']);
     Route::post('/cart/change-quantity', [CartController::class, 'changeQuantity']);
+    Route::post('/cart/increment', [CartController::class, 'incrementQuantity'])->name('cart.increment');
+    Route::post('/cart/decrement', [CartController::class, 'decrementQuantity'])->name('cart.decrement');
+
 
 
 
@@ -54,13 +58,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 
     Route::get('/my-items', [ItemController::class, 'userItems'])->name('items.user');
+
+    Route::post('/checkout/finalize', [OrderController::class, 'finalizeCheckout'])->name('checkout.finalize');
+    Route::post('/checkout/preview', [OrderController::class, 'previewCheckout'])->name('checkout.preview');
+    Route::get('/orders/thankyou', function () {return view('orders.thankyou');})->name('orders.thankyou');
+
+    Route::get('/my-orders', [OrderController::class, 'userOrders'])->name('orders.user');
+
 });
 
-//ADMIN ROUTES
+//admin middleware
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
-    // ud operations needed XD
+    Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
+    // missing update
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
@@ -69,8 +81,6 @@ Route::post('/register', [RegisteredUserController::class, 'store'])->middleware
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->name('profile.show');
-
-Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy')->middleware('admin');
 
 
   

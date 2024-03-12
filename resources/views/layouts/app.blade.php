@@ -95,7 +95,7 @@
                         <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Manage Account
                         </a>
-                        <a href="{{ route('home') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
+                        <a href="{{ route('orders.user') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Your Orders
                         </a>
                         <a href="{{ route('home') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">

@@ -40,8 +40,6 @@
                             Sold by: <br> Unknown User
                         @endisset
                     </h3>
-                    
-                    <!-- CRITICAL change to actual route thank you -->
                    
                     <i class="fas fa-comment-dots fa-lg"></i>
                     </button>

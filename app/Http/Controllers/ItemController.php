@@ -23,8 +23,7 @@ class ItemController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $items = Item::inRandomOrder()->take(8)->get();
-        
+        $items = Item::where('quantity', '>', 0)->inRandomOrder()->take(8)->get();
     
         return view('items.index', compact('categories', 'items'));
     }

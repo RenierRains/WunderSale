@@ -45,17 +45,5 @@ class User extends Authenticatable
         return $this->hasMany(Item::class);
     }
     
-    public function reviews() {
-        return $this->hasMany(Review::class);
-    }
 
-    public function conversations() {
-        return $this->belongsToMany(Conversation::class, 'conversations', 'user_one', 'user_two')
-                    ->withTimestamps();
-    }
-
-    // User's messages
-    public function messages() {
-        return $this->hasMany(Message::class);
-    }
 }
