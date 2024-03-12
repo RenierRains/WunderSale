@@ -9,6 +9,7 @@ use App\Http\Controllers\API\CartAPIController;
 use App\Http\Controllers\API\AdminAPIController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\OrderAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +65,9 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 // Registration
 Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/finalize-checkout', [OrderAPIController::class, 'finalizeCheckout']);
+    Route::get('/preview-checkout', [OrderAPIController::class, 'previewCheckout']);
+    Route::get('/user-orders', [OrderAPIController::class, 'userOrders']);
+});
