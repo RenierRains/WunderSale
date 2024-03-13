@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\ApiLoginRequest; 
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,22 +24,43 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      *
-     * @param  LoginRequest  $request
+     * @param  ApiLoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function store(LoginRequest $request)
+    public function store(ApiLoginRequest $request)
     {
-        $request->authenticate();
+        // Attempt to authenticate the user with the provided credentials
+        $credentials = $request->only('email', 'password');
 
-        $request->session()->regenerate();
+        if (!Auth::attempt($credentials)) {
+            // Authentication failed
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Authentication failed.',
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+            // Optionally handle non-JSON authentication failure response here.
+        }
 
+        // Authentication successful
         if ($request->wantsJson()) {
+            $user = Auth::user();
+            
             return response()->json([
+                'error' => false,
                 'message' => 'Authentication successful.',
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'student_number' => $user->student_number, // Ensure your User model has this attribute
+                ]
             ], Response::HTTP_OK);
         }
 
-        // For web requests, redirect as before
+        // Handle web request after successful authentication
+        $request->session()->regenerate();
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
