@@ -74,15 +74,18 @@ class OrderController extends Controller
         return view('checkout.preview', compact('cartItems', 'totalPrice'));
     }
 
-    public function userOrders(){
-        $orders = Order::where('user_id', Auth::id())
-                ->with(['items' => function ($query) {
-                    $query->with('item')->take(10); 
-                }])
-                ->orderBy('created_at', 'desc')
-                ->paginate(10); // paginate test
+    public function myOrders($status = 'all'){
+        $query = Order::where('user_id', Auth::id());
 
-         return view('orders.user_orders', compact('orders'));
+        if ($status === 'pending') {
+            $query->where('status', 'pending');
+        } elseif ($status === 'delivered') {
+            $query->where('status', 'delivered');
+        }
+        
+        $orders = $query->paginate(10); 
+
+        return view('orders.user_orders', compact('orders', 'status'));
     }
     
 

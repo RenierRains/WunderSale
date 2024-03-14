@@ -7,6 +7,14 @@
         <p class="text-sm text-gray-600">Review your order history and details.</p>
     </div>
 
+    {{-- Tab Links --}}
+    <div class="mb-6 text-center">
+        <a href="{{ route('orders.user', 'all') }}" class="px-4 py-2 {{ $status == 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800' }} rounded-lg mx-1">All</a>
+        <a href="{{ route('orders.user', 'pending') }}" class="px-4 py-2 {{ $status == 'pending' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800' }} rounded-lg mx-1">Pending</a>
+        <a href="{{ route('orders.user', 'delivered') }}" class="px-4 py-2 {{ $status == 'delivered' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800' }} rounded-lg mx-1">Delivered</a>
+    </div>
+
+    {{-- Orders List --}}
     @forelse ($orders as $order)
         <div class="mb-4 p-3 bg-white shadow-sm rounded-lg">
             <div class="flex justify-between items-center border-b pb-2 mb-2">
@@ -33,7 +41,7 @@
         </div>
     @empty
         <div class="text-center py-4">
-            <p class="text-gray-600 font-medium">You have no orders.</p>
+            <p class="text-gray-600 font-medium">You have no orders in this category.</p>
         </div>
     @endforelse
 </div>

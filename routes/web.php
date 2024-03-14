@@ -64,7 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/preview', [OrderController::class, 'previewCheckout'])->name('checkout.preview');
     Route::get('/orders/thankyou', function () {return view('orders.thankyou');})->name('orders.thankyou');
 
-    Route::get('/my-orders', [OrderController::class, 'userOrders'])->name('orders.user');
+    Route::get('/my-orders/{status?}', [OrderController::class, 'myOrders'])->name('orders.user')->where('status', 'all|pending|delivered');
+    
+
     Route::get('/seller/pending-orders', [SellerController::class, 'pendingOrders'])->name('seller.pendingOrders');
     Route::post('/seller/orders/{orderId}/confirm-delivery', [SellerController::class, 'confirmDeliveryBySeller'])->name('orders.confirmDeliveryBySeller');
 });
