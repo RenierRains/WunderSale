@@ -17,9 +17,9 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function reviews() {
+    /*public function reviews() {
         return $this->hasMany(Review::class);
-    }
+    }*/
     
     use HasFactory;
 }

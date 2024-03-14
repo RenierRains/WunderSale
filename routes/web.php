@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SellerController;
 
 
 
@@ -64,7 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/thankyou', function () {return view('orders.thankyou');})->name('orders.thankyou');
 
     Route::get('/my-orders', [OrderController::class, 'userOrders'])->name('orders.user');
-
+    Route::get('/seller/pending-orders', [SellerController::class, 'pendingOrders'])->name('seller.pendingOrders');
+    Route::post('/seller/orders/{orderId}/confirm-delivery', [SellerController::class, 'confirmDeliveryBySeller'])->name('orders.confirmDeliveryBySeller');
 });
 
 //admin middleware
@@ -83,6 +85,8 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->name('profile.show');
 
 
-  
+
+
+
 
 require __DIR__.'/auth.php';

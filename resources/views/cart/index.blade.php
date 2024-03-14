@@ -19,7 +19,7 @@
             @if($carts->isEmpty())
                 <div class="text-center">
                     <p class="text-gray-600 mb-4">Your cart is empty.</p>
-                    <a href="{{ route('home') }}" class="px-4 py-2 bg-[#112D4E] text-white rounded hover:bg-blue-700">Start Shopping</a>
+                    <a href="{{ route('home') }}" class="px-4 py-2 bg-[#26214a] text-white rounded hover:bg-[#223249]">Start Shopping</a>
                 </div>
             @else
                 <form id="cart-form" action="{{ route('checkout.preview') }}" method="POST">
@@ -59,7 +59,7 @@
                     <span class="text-gray-600">Total: ₱</span><span id="selected-total">0.00</span>
                 </div>
                 <!-- button -->
-                <button id="checkout-button" onclick="document.getElementById('cart-form').submit();" class="w-full px-6 py-2 bg-green-500 text-white rounded hover:bg-green-700" {{ $carts->isEmpty() ? 'disabled' : '' }}>Checkout</button>
+                <button id="checkout-button" onclick="document.getElementById('cart-form').submit();" class="w-full px-6 py-2 bg-green-500 text-white rounded hover:bg-[#489331]" {{ $carts->isEmpty() ? 'disabled' : '' }}>Checkout</button>
             </div>
         </div>
     </div>
@@ -79,7 +79,7 @@ function removeFromCart(cartId, event) {
 
         // checf cart empty
         if (document.querySelectorAll('.item-checkbox').length === 0) { // last item
-            document.getElementById('cart-content').innerHTML = `<div class="text-center"><p class="text-gray-600 mb-4">Your cart is empty.</p><a href="{{ route('home') }}" class="px-4 py-2 bg-[#112D4E] text-white rounded hover:bg-blue-700">Start Shopping</a></div>`;
+            document.getElementById('cart-content').innerHTML = `<div class="text-center"><p class="text-gray-600 mb-4">Your cart is empty.</p><a href="{{ route('home') }}" class="px-4 py-2 bg-[#26214a] text-white rounded hover:bg-[#223249]">Start Shopping</a></div>`;
         }
     })
     .catch(error => {
