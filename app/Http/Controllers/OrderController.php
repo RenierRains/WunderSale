@@ -40,19 +40,19 @@ class OrderController extends Controller
             'status' => 'pending',
             'payment_method' => $paymentMethod, 
         ]);
-        // Generate a unique order number
+        // generate order number
         $orderNumber = 'ORD-' . now()->year . '-' . Str::padLeft($order->id, 6, '0');
         $order->update(['order_number' => $orderNumber]);
     
         foreach ($cartItems as $cartItem) {
             OrderItem::create([
-                'order_id' => $order->id, // Make sure to use the order ID, not the order number, for foreign key relations
+                'order_id' => $order->id,
                 'item_id' => $cartItem->item_id,
                 'quantity' => $cartItem->quantity,
                 'price' => $cartItem->item->price, 
             ]);
     
-            //decrement quantity and delete from cart
+            //decrement quantity and delete from cart + k maybe revamp this
             $cartItem->item->decrement('quantity', $cartItem->quantity);
             $cartItem->delete();
         }
@@ -77,10 +77,10 @@ class OrderController extends Controller
     public function userOrders(){
         $orders = Order::where('user_id', Auth::id())
                 ->with(['items' => function ($query) {
-                    $query->with('item')->take(10); // Adjust if you meant to limit items per order instead
+                    $query->with('item')->take(10); 
                 }])
                 ->orderBy('created_at', 'desc')
-                ->paginate(10); // Paginate orders, 10 per page
+                ->paginate(10); // paginate test
 
          return view('orders.user_orders', compact('orders'));
     }

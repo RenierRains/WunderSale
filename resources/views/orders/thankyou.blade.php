@@ -18,7 +18,7 @@
                     <ul class="list-disc pl-5">
                         @foreach ($order->items as $orderItem)
                             @php
-                                $item = $orderItem->item; // Access the item related to the order item
+                                $item = $orderItem->item; 
                             @endphp
                             @if($item)
                                 <li>{{ $item->name }} - Quantity: {{ $orderItem->quantity }} - Price: ₱{{ $orderItem->price }}</li>
@@ -37,7 +37,7 @@
 
                 <div class="mt-4">
                     <h3 class="text-lg font-semibold">What's Next?</h3>
-                    <p>You will receive an email confirmation shortly. Please prepare the payment amount if you chose Cash on Delivery. For Cash on Campus, further instructions will be provided via email.</p>
+                    <p>You will receive an chat confirmation shortly. For Cash on Campus, please check your chat for further information.</p>
                 </div>
             </div>
         @endif
