@@ -32,10 +32,10 @@ Route::apiResource('items', ItemAPIController::class);
 
 // Profile routes
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('profile/edit', [ProfileController::class, 'edit']);
-    Route::put('profile/update', [ProfileController::class, 'update']);
-    Route::delete('profile/delete', [ProfileController::class, 'destroy']);
-    Route::get('seller/{user}/profile', [ProfileController::class, 'showSellerProfile']);
+    Route::get('profile/', [ProfileAPIController::class, 'index']);
+    Route::put('profile/update', [ProfileAPIController::class, 'update']);
+    Route::delete('profile/delete', [ProfileAPIController::class, 'destroy']);
+    Route::get('seller/{user}/profile', [ProfileAPIController::class, 'showSellerProfile']);
 
     Route::post('/items/create', [ItemAPIController::class, 'store']);
     Route::put('/items/{item}', [ItemController::class, 'update']);
