@@ -7,7 +7,7 @@
         <div class="mb-4 p-4 bg-white shadow rounded-lg">
             <div class="flex justify-between items-center">
                 <div>
-                    <h2 class="text-lg font-medium">Order #{{ $order->id }}</h2>
+                    <h2 class="text-lg font-medium">Order #{{ $order->order_number }}</h2>
                     <p>Placed on: {{ $order->created_at->toFormattedDateString() }}</p>
                 </div>
                 <form action="{{ route('orders.confirmDeliveryBySeller', ['orderId' => $order->id]) }}" method="POST">

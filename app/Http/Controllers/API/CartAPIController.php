@@ -9,8 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class CartAPIController extends Controller
 {
-    public function add(Request $request)
-    {
+    public function index(Request $request){
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not authenticated.'], 401);
+        }
+
+        $cartItems = Cart::where('user_id', $user->id)->with('item')->get();
+
+        return response()->json([
+            'message' => 'Cart items retrieved successfully.',
+            'cartItems' => $cartItems,
+        ]);
+    }
+    
+    public function add(Request $request){
         $validated = $request->validate([
             'item_id' => 'required|exists:items,id',
             'quantity' => 'required|integer|min:1',

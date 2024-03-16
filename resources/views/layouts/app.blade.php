@@ -98,11 +98,8 @@
                         <a href="{{ route('orders.user') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Your Orders
                         </a>
-                        <a href="{{ route('home') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
-                            Liked Items
-                        </a>
-                        <a href="{{ route('home') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
-                            Your Reviews
+                        <a href="{{ route('seller.pendingOrders') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
+                            Seller Center
                         </a>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-green-700 hover:text-white">
                             Logout

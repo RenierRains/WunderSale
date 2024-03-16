@@ -46,10 +46,12 @@ class AuthenticatedSessionController extends Controller
         // Authentication successful
         if ($request->wantsJson()) {
             $user = Auth::user();
+            $token = $user->createToken('YourAppName')->plainTextToken;
             
             return response()->json([
                 'error' => false,
                 'message' => 'Authentication successful.',
+                'token' => $token,
                 'user' => [
                     'id' => $user->id,
                     'name' => $user->name,

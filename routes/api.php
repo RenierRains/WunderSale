@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\OrderAPIController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -33,7 +33,7 @@ Route::apiResource('items', ItemAPIController::class);
 Route::get('user/items', [ItemController::class, 'userItems'])->middleware('auth:api');
 
 // Profile routes
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('profile/edit', [ProfileController::class, 'edit']);
     Route::put('profile/update', [ProfileController::class, 'update']);
     Route::delete('profile/delete', [ProfileController::class, 'destroy']);
@@ -42,19 +42,19 @@ Route::middleware('auth:api')->group(function () {
 
 // Category routes
 Route::get('categories', [CategoryController::class, 'index']);
-Route::post('categories', [CategoryController::class, 'store'])->middleware('auth:api');
+Route::post('categories', [CategoryController::class, 'store'])->middleware('auth');
 
 
 // Cart routes
-Route::middleware('auth:api')->group(function () {
-    Route::get('cart', [CartController::class, 'index']);
-    Route::post('cart/add', [CartController::class, 'add']);
-    Route::delete('cart/remove', [CartController::class, 'remove']);
-    Route::post('cart/change-quantity', [CartController::class, 'changeQuantity']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('cart', [CartAPIController::class, 'index']);
+    Route::post('cart/add', [CartAPIController::class, 'add']);
+    Route::delete('cart/remove', [CartAPIController::class, 'remove']);
+    Route::post('cart/change-quantity', [CartAPIController::class, 'changeQuantity']);
 });
 
 // Admin routes 
-Route::middleware(['auth:api', 'is_admin'])->group(function () {
+Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('admin/users', [AdminController::class, 'users']);
     Route::get('admin/items', [AdminController::class, 'items']);
     Route::delete('admin/user/{user}', [AdminController::class, 'destroyUser']);
@@ -66,7 +66,7 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 // Registration
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::post('/finalize-checkout', [OrderAPIController::class, 'finalizeCheckout']);
     Route::get('/preview-checkout', [OrderAPIController::class, 'previewCheckout']);
     Route::get('/user-orders', [OrderAPIController::class, 'userOrders']);

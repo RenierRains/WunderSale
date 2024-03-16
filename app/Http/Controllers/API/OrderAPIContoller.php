@@ -16,7 +16,7 @@ class OrderAPIController extends Controller
     public function finalizeCheckout(Request $request)
     {
         $user = auth()->user();
-
+        
         $selectedItemIds = $request->input('selected_items', []);
         $cartItems = Cart::where('user_id', $user->id)
                          ->whereIn('id', $selectedItemIds)
