@@ -33,7 +33,7 @@ Route::apiResource('items', ItemAPIController::class);
 Route::get('user/items', [ItemController::class, 'userItems'])->middleware('auth:api');
 
 // Profile routes
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile/edit', [ProfileController::class, 'edit']);
     Route::put('profile/update', [ProfileController::class, 'update']);
     Route::delete('profile/delete', [ProfileController::class, 'destroy']);
@@ -41,8 +41,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // Category routes
-Route::get('categories', [CategoryController::class, 'index']);
-Route::post('categories', [CategoryController::class, 'store'])->middleware('auth');
+Route::get('categories', [CategoryAPIController::class, 'index']);
+Route::post('categories', [CategoryAPIController::class, 'store'])->middleware('auth:sanctum');
 
 
 // Cart routes
@@ -63,10 +63,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 // Login
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-// Registration
-Route::post('/register', [RegisteredUserController::class, 'store']);
-
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/finalize-checkout', [OrderAPIController::class, 'finalizeCheckout']);
     Route::get('/preview-checkout', [OrderAPIController::class, 'previewCheckout']);
     Route::get('/user-orders', [OrderAPIController::class, 'userOrders']);
