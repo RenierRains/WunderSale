@@ -9,7 +9,7 @@ use App\Http\Controllers\API\CartAPIController;
 use App\Http\Controllers\API\AdminAPIController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\OrderAPIController;
+use App\Http\Controllers\API\OrderAPIController;
 
 /*
 |--------------------------------------------------------------------------
