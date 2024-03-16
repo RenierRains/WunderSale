@@ -29,8 +29,6 @@ Route::middleware('auth')->get('/user', function (Request $request) {
 
 // Item routes
 Route::apiResource('items', ItemAPIController::class);
-// for user specific items
-Route::get('user/items', [ItemController::class, 'userItems'])->middleware('auth:api');
 
 // Profile routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -38,6 +36,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('profile/update', [ProfileController::class, 'update']);
     Route::delete('profile/delete', [ProfileController::class, 'destroy']);
     Route::get('seller/{user}/profile', [ProfileController::class, 'showSellerProfile']);
+
+    Route::post('/items/create', [ItemAPIController::class, 'store']);
+    Route::put('/items/{item}', [ItemController::class, 'update']);
+    Route::delete('/items/{item}', [ItemApiController::class, 'destroy']);
+    Route::get('user/items', [ItemController::class, 'userItems']);
+
 });
 
 // Category routes
