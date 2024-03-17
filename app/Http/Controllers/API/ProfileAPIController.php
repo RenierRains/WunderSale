@@ -16,17 +16,34 @@ use App\Models\Item;
 
 class ProfileAPIController extends Controller
 {
-    // Return user profile information in JSON
+ 
     public function index(Request $request)
     {
         return response()->json(['user' => $request->user()]);
     }
 
-    // Update user profile and return JSON response
     public function update(ProfileUpdateRequest $request)
     {
         $user = $request->user();
         $user->update($request->validated());
         return response()->json(['message' => 'Profile updated successfully.', 'user' => $user]);
     }
+    public function showSellerProfile(User $user)
+    {
+
+    $userData = [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'student_number' => $user->student_number, 
+    ];
+
+    $items = $user->items()->get(['id', 'name', 'description', 'price', 'quantity'])->toArray();
+
+
+    return response()->json([
+        'user' => $userData,
+        'items' => $items,
+    ]);
+}
 }
