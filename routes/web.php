@@ -61,6 +61,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/my-items', [ItemController::class, 'userItems'])->name('items.user');
 
+    Route::post('/checkout/direct-preview', [OrderController::class, 'directPreview'])->name('checkout.directPreview');
+    Route::post('/checkout/finalize-direct-purchase', [OrderController::class, 'finalizeDirectPurchase'])->name('checkout.finalizeDirectPurchase');
     Route::post('/checkout/finalize', [OrderController::class, 'finalizeCheckout'])->name('checkout.finalize');
     Route::post('/checkout/preview', [OrderController::class, 'previewCheckout'])->name('checkout.preview');
     Route::get('/orders/thankyou', function () {return view('orders.thankyou');})->name('orders.thankyou');

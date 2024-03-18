@@ -23,10 +23,16 @@
                     <button onclick="increaseQuantity({{ $item->quantity }})" class="px-2 py-1 text-lg border rounded">+</button>
                 </div>
 
-                <div class="flex space-x-2 mb-4">
-                    <button class="flex-1 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Buy Now</button>
-                    <button onclick="addToCart({{ $item->id }}, {{ $item->price }})" class="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">Add to Cart</button>
-                </div>
+                <form action="{{ route('checkout.directPreview') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="item_id" value="{{ $item->id }}">
+                    <input type="hidden" name="quantity" id="quantityInput" value="1">
+                    <div class="flex space-x-2 mb-4">
+                        <button type="submit" class="flex-1 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Buy Now</button>
+                        <button onclick="addToCart({{ $item->id }}, document.getElementById('quantityInput').value)" type="button" class="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700">Add to Cart</button>
+                    </div>
+                </form>
+
 
                 <!-- seller -->
                 <div class="bg-gray-100 p-4 rounded-lg flex justify-between items-center">
@@ -75,50 +81,6 @@
         </div>
     </div>
 
-        <!-- ratings and reviews block -->
-    <div class="bg-white shadow-lg rounded-lg overflow-hidden mt-8 p-4 text-gray-900">
-        <h3 class="text-xl font-bold mb-4">Ratings & Reviews</h3>
-        <div class="mb-4">
-            <span class="text-lg font-semibold">Average Rating:</span>
-            <span class="text-yellow-400">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <i class="far fa-star"></i>
-            </span>
-            <span class="ml-2 text-gray-600">(4.5 out of 5)</span>
-        </div>
-        <div class="border-t border-gray-200 pt-4">
-            <div class="review">
-                <h4 class="text-lg font-semibold">Renier Dave Rosal Reyes</h4>
-                <span class="text-yellow-400">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                </span>
-                <p class="text-gray-600">"testapi1"</p>
-            </div>
-            <div class="review mt-4">
-                <h4 class="text-lg font-semibold">admin</h4>
-                <span class="text-yellow-400">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <i class="far fa-star"></i>
-                </span>
-                <p class="text-gray-600">"test 2"</p>
-            </div>
-            <!-- placeholder for more reviews -->
-        </div>
-        <!-- optionallyadd a link/button to write a review -->
-        <div class="mt-4">
-            <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Write a Review</a>
-        </div>
-    </div>
 
 </div>
 

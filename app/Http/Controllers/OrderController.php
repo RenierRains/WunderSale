@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart; 
 use App\Models\Order; 
 use App\Models\OrderItem; 
+use App\Models\Item; 
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -72,6 +73,47 @@ class OrderController extends Controller
             return $cartItem->quantity * $cartItem->item->price;
         });
         return view('checkout.preview', compact('cartItems', 'totalPrice'));
+    }
+
+    public function directPreview(Request $request){
+        $itemId = $request->input('item_id');
+        $quantity = $request->input('quantity', 1); 
+    
+        $item = Item::findOrFail($itemId); 
+        $totalPrice = $item->price * $quantity; 
+    
+        return view('checkout.directPreview', compact('item', 'quantity', 'totalPrice'));
+    }
+
+    public function finalizeDirectPurchase(Request $request){
+        $user = Auth::user();
+        $itemId = $request->input('item_id');
+        $quantity = $request->input('quantity', 1); 
+
+        $item = Item::findOrFail($itemId);
+
+        $totalPrice = $item->price * $quantity;
+
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total_price' => $totalPrice,
+            'status' => 'pending',
+            'payment_method' => $request->input('payment_method', 'Cash on Delivery'), 
+        ]);
+
+        $orderNumber = 'ORD-' . now()->year . '-' . Str::padLeft($order->id, 6, '0');
+        $order->update(['order_number' => $orderNumber]);
+        
+        OrderItem::create([
+            'order_id' => $order->id,
+            'item_id' => $item->id,
+            'quantity' => $quantity,
+            'price' => $item->price,
+        ]);
+
+        $item->decrement('quantity', $quantity);
+
+        return redirect()->route('orders.thankyou')->with('orderDetails', $order);
     }
 
     public function myOrders($status = 'all'){
