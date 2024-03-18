@@ -27,26 +27,26 @@ class SellerController extends Controller
 
     public function confirmDeliveryBySeller(Request $request, $orderId)
     {
-        // Find the order
+        // find
         $order = Order::findOrFail($orderId);
 
-        // Load the order's items to verify if the current user (seller) is associated with this order
+        // load
         $order->load('items.user');
 
-        // Check if the authenticated user is the seller of any items in this order
+        // check if seller sells
         $isSeller = $order->items->first(function ($item) {
             return $item->user_id === Auth::id();
         });
 
         if (!$isSeller) {
-            // If the user is not the seller of any items in the order, deny the action
+            //  authorize action
             return back()->withErrors(['message' => 'Unauthorized action.']);
         }
 
-        // Proceed to update the order status to 'delivered'
+        // update to deleted
         $order->update(['status' => 'delivered']);
 
-        // Redirect back with a success message
+        // redirect
         return redirect()->route('seller.pendingOrders')->with('success', 'Order marked as delivered.');
     }
 }
