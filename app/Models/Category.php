@@ -14,9 +14,9 @@ class Category extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function item()
+    public function items()
     {
-        return $this->belongsTo(Item::class);
+        return $this->hasMany(Item::class);
     }
     
     use HasFactory;

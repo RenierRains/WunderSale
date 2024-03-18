@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\ChatController;
 
 
 
@@ -86,7 +87,7 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/seller/{user}', [ProfileController::class, 'showSellerProfile'])->name('profile.show');
 
-
+Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
 
 
 

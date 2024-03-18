@@ -22,10 +22,12 @@ class ItemController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
-        $items = Item::where('quantity', '>', 0)->inRandomOrder()->take(8)->get();
+        $items = Item::where('quantity', '>', 0)->inRandomOrder()->take(50)->get();
+        $categories = Category::with('items')->get();
+
+        $newArrivals = Item::latest()->take(6)->get();
     
-        return view('items.index', compact('categories', 'items'));
+        return view('items.index', compact('categories', 'items', 'newArrivals'));
     }
 
     public function create()
@@ -60,7 +62,7 @@ class ItemController extends Controller
 
     public function show(Item $item)
     {
-        $randomItems = Item::where('id', '!=', $item->id)->inRandomOrder()->take(4)->get(); 
+        $randomItems = Item::where('id', '!=', $item->id)->inRandomOrder()->take(50)->get(); 
         return view('items.show', compact('item', 'randomItems'));
     }
 

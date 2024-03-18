@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'WunderSale') }}</title>
-    <!-- Fonts -->
+    <!-- fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <!-- Scripts -->
+    <!--scripts -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <script type="text/javascript">
@@ -19,10 +20,10 @@
     <style> 
         .messages {
         display: flex;
-        flex-direction: column-reverse; /* Newest messages at the bottom */
+        flex-direction: column-reverse; /
         overflow-y: auto;}
 
-        /* For Webkit browsers like Chrome, Safari */
+
         input[type="number"]::-webkit-inner-spin-button, 
         input[type="number"]::-webkit-outer-spin-button { 
             -webkit-appearance: none; 
@@ -59,7 +60,7 @@
                 <a href="{{ route('items.create') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-plus-circle"></i>
                 </a>
-                <a href="{{ route('home') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white">
+                <a href="{{ route('chat.index') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white">
                     <i class="fa fa-envelope"></i>
                 </a>
             </div>
@@ -132,6 +133,11 @@
         </div>
     </footer>
     
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+   
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </body>
+
+
+
 </html>
