@@ -53,27 +53,27 @@
             </form>
             </div>
             @auth
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-1"> 
                 <a href="{{ route('cart.index') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-shopping-cart"></i>
                 </a>
                 <a href="{{ route('items.create') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white"> 
-                    <i class="fa fa-plus-circle"></i>
+                    <i class="fa fa-tag"></i>
                 </a>
                 <a href="{{ route('chat.index') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white">
-                    <i class="fa fa-envelope"></i>
+                    <i class="fa fa-comments"></i>
                 </a>
             </div>
             @else
-            <div class="flex items-center space-x-4"> 
+            <div class="flex items-center space-x-1"> 
                 <a href="{{ route('login') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white"> 
                     <i class="fa fa-shopping-cart"></i>
                 </a>
                 <a href="{{ route('login') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white"> 
-                    <i class="fa fa-plus-circle"></i>
+                    <i class="fa fa-tag"></i>
                 </a>
                 <a href="{{ route('login') }}" class="px-3 py-3 bg-[#489331] rounded-lg hover:bg-green-600 text-white"> 
-                    <i class="fa fa-envelope"></i>
+                    <i class="fa fa-comments"></i>
                 </a>
             </div>
             @endauth

@@ -21,7 +21,7 @@
             </div>
             <nav class="mt-5">
                 <a href="{{ route('admin.users') }}" class="block py-2.5 px-4 rounded hover:bg-[#489331]">Manage Users</a>
-                <a href="#" class="block py-2.5 px-4 rounded hover:bg-[#489331]">Manage Orders</a>
+                <a href="{{ route('admin.orders') }}" class="block py-2.5 px-4 rounded hover:bg-[#489331]">Manage Orders</a>
                 <a href="{{ route('admin.items') }}" class="block py-2.5 px-4 rounded hover:bg-[#489331]">Manage Items</a>
             </nav>
         </aside>

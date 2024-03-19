@@ -3,11 +3,23 @@
 @section('content')
 <div class="container">
     <h1 class="text-black">Manage Users</h1>
+    
+    <br>
+    <form action="{{ route('admin.usersearch') }}" method="GET" class="mb-4">
+        <div class="flex space-x-2">
+            <input type="text" name="search" placeholder="Search users..." class="px-4 py-2 w-full border rounded" value="{{ request('search') }}">
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Search</button>
+        </div>
+    </form>
     <form action="{{ route('admin.users.import') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="file" name="users_csv" required>
         <button type="submit" class="bg-[#489331] hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Upload Users</button>
     </form>
+
+    <br>
+
+    
     <table class="w-full text-left text-black">
         <thead>
             <tr>

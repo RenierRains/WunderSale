@@ -81,6 +81,9 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
     // missing update
     Route::post('/admin/users/import', [AdminController::class, 'importUsers'])->name('admin.users.import');
+    Route::get('/admin/usersearch', [AdminController::class, 'usersearch'])->name('admin.usersearch');
+    Route::get('/admin/itemsearch', [AdminController::class, 'itemsearch'])->name('admin.itemsearch');
+    Route::get('/admin/orders', [AdminController::class, 'manageOrders'])->name('admin.orders');
 
 
 });

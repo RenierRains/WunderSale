@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Item;
+use App\Models\Order;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -70,5 +71,58 @@ class AdminController extends Controller
         }
 
         return back()->with('success', 'Users have been successfully imported.');
+    }
+
+    public function usersearch(Request $request){
+        $search = $request->input('search');
+
+        if (!empty($search)) {
+            // If there's a search term, filter users by name, email, or student number
+            $users = User::where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('student_number', 'like', '%' . $search . '%')
+                ->get();
+        } else {
+            // If there's no search term, display all users
+            $users = User::all();
+        }
+
+        return view('admin.users', compact('users'));
+    }
+
+    public function itemsearch(Request $request){
+        $search = $request->input('search');
+
+        if (!empty($search)) {
+            // Filter items by name or other attributes
+            $items = Item::where('name', 'like', '%' . $search . '%')
+                        // Optionally, filter by uploader's name or other related model fields
+                        ->orWhereHas('user', function($query) use ($search) {
+                            $query->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->get();
+        } else {
+            $items = Item::all();
+        }
+
+        return view('admin.items', compact('items'));
+    }
+
+    public function manageOrders(Request $request){
+        $search = $request->input('search');
+
+        if (!empty($search)) {
+            $orders = Order::where('order_number', 'like', "%{$search}%")
+                        ->orWhere('status', 'like', "%{$search}%")
+                        ->orWhere('payment_method', 'like', "%{$search}%")
+                        ->orWhereHas('user', function ($query) use ($search) {
+                            $query->where('name', 'like', "%{$search}%");
+                        })
+                        ->get();
+        } else {
+            $orders = Order::all();
+        }
+
+        return view('admin.manageOrders', compact('orders'));
     }
 }
