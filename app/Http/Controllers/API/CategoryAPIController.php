@@ -25,5 +25,5 @@ class CategoryAPIController extends Controller
         return response()->json(['message' => 'Category created successfully.', 'category' => $category], 201);
     }
 
-    // Additional methods (edit, update, delete) should return JSON responses similarly.
+    // additional?
 }

@@ -77,13 +77,11 @@ class AdminController extends Controller
         $search = $request->input('search');
 
         if (!empty($search)) {
-            // If there's a search term, filter users by name, email, or student number
             $users = User::where('name', 'like', '%' . $search . '%')
                 ->orWhere('email', 'like', '%' . $search . '%')
                 ->orWhere('student_number', 'like', '%' . $search . '%')
                 ->get();
         } else {
-            // If there's no search term, display all users
             $users = User::all();
         }
 
@@ -94,9 +92,7 @@ class AdminController extends Controller
         $search = $request->input('search');
 
         if (!empty($search)) {
-            // Filter items by name or other attributes
             $items = Item::where('name', 'like', '%' . $search . '%')
-                        // Optionally, filter by uploader's name or other related model fields
                         ->orWhereHas('user', function($query) use ($search) {
                             $query->where('name', 'like', '%' . $search . '%');
                         })
