@@ -80,6 +80,9 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
     Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
     // missing update
+    Route::post('/admin/users/import', [AdminController::class, 'importUsers'])->name('admin.users.import');
+
+
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');

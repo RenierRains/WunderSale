@@ -2,10 +2,8 @@
 
 @section('content')
 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Swiper container for Auto-swiping Images -->
     <div class="swiper-container my-4">
         <div class="swiper-wrapper">
-            <!-- Add your static images in swiper-slide divs -->
             <div class="swiper-slide">
                 <img src="{{ asset('storage/1.png') }}" alt="Image 1" class="w-full object-cover" style="height: 400px;">
             </div>

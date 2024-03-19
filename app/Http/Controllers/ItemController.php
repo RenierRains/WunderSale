@@ -25,7 +25,7 @@ class ItemController extends Controller
         $items = Item::where('quantity', '>', 0)->inRandomOrder()->take(50)->get();
         $categories = Category::with('items')->get();
 
-        $newArrivals = Item::latest()->take(6)->get();
+        $newArrivals = Item::where('quantity', '>', 0)->latest()->take(6)->get();
     
         return view('items.index', compact('categories', 'items', 'newArrivals'));
     }

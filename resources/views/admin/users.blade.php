@@ -1,8 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.admin_layout')
 
 @section('content')
 <div class="container">
     <h1 class="text-black">Manage Users</h1>
+    <form action="{{ route('admin.users.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="users_csv" required>
+        <button type="submit" class="bg-[#489331] hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Upload Users</button>
+    </form>
     <table class="w-full text-left text-black">
         <thead>
             <tr>
